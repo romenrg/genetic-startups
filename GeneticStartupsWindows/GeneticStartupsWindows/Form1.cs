@@ -19,12 +19,19 @@ namespace GeneticStartupsWindows
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            // Example on how to create all the layout programatically
+            // http://stackoverflow.com/questions/28255438/programmatically-create-panel-and-add-picture-boxes
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // In future maybe set the number of columns and rows like
+            // http://stackoverflow.com/questions/15623461/adding-pictureboxes-to-tablelayoutpanel-is-very-slow
 
+            // Starting
+            this.pictureBox1.Image = GeneticStartups.Properties.Resources.entrepreneur_starting;
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            //Properties.entrepreneur_starting.jpg");
         }
 
         private void button2_Click(object sender, EventArgs e)
