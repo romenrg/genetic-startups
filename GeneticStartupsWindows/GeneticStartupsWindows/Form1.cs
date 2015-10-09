@@ -29,7 +29,7 @@ namespace GeneticStartupsWindows
             // http://stackoverflow.com/questions/15623461/adding-pictureboxes-to-tablelayoutpanel-is-very-slow
 
             // Starting
-            this.pictureBox1.Image = GeneticStartups.Properties.Resources.entrepreneur_starting;
+            this.pictureBox1.Image = GeneticStartupsWindows.Properties.Resources.entrepreneur_starting;
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             //Properties.entrepreneur_starting.jpg");
         }

@@ -7,8 +7,8 @@
     <ProjectGuid>{6C4E8309-74C4-44EA-8B52-F17AC0431A99}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GeneticStartups</RootNamespace>
-    <AssemblyName>GeneticStartups</AssemblyName>
+    <RootNamespace>GeneticStartupsWindows</RootNamespace>
+    <AssemblyName>GeneticStartupsWindows</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

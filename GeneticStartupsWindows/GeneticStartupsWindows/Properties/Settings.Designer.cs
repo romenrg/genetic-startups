@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GeneticStartups.Properties
+namespace GeneticStartupsWindows.Properties
 {
 
 
