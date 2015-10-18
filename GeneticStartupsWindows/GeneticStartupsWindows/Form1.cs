@@ -110,6 +110,8 @@ namespace GeneticStartupsWindows
 
         private void createDynamicTable()
         {
+            this.tableLayoutPanel1.Controls.Clear();
+            this.tableLayoutPanel1.RowStyles.Clear();
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
             this.tableLayoutPanel1.ColumnCount = this.numCols;
             this.tableLayoutPanel1.RowCount = this.numRows;
@@ -183,10 +185,12 @@ namespace GeneticStartupsWindows
             var result = form2.ShowDialog();
             if (result == DialogResult.OK)
             {
+                Cursor.Current = Cursors.WaitCursor;
                 this.numCols = form2.numCols;
                 this.numRows = form2.numRows;
                 this.createDynamicTable();
                 this.setLayout();
+                Cursor.Current = Cursors.Default;
             }
 
         }
