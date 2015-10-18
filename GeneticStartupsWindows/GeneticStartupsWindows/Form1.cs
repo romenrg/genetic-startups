@@ -20,8 +20,8 @@ namespace GeneticStartupsWindows
             // http://stackoverflow.com/questions/28255438/programmatically-create-panel-and-add-picture-boxes
 
             createBasicLayout();
-            createDynamicTable(20, 15);
-            setFinalLayout();
+            createDynamicTable();
+            setLayout();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -32,16 +32,16 @@ namespace GeneticStartupsWindows
         private void createBasicLayout()
         {
             // 
-            // tableLayoutPanel1
+            // Creating elements
             // 
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            //this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            //this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mapSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
-            //((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            //((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -72,6 +72,8 @@ namespace GeneticStartupsWindows
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
             //this.Load += new System.EventHandler(this.Form1_Load);
@@ -79,14 +81,39 @@ namespace GeneticStartupsWindows
             //((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             //((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             //this.ResumeLayout(false);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(473, 24);
+            this.menuStrip1.TabIndex = 3;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mapSizeToolStripMenuItem});
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // mapSizeToolStripMenuItem
+            // 
+            this.mapSizeToolStripMenuItem.Name = "mapSizeToolStripMenuItem";
+            this.mapSizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mapSizeToolStripMenuItem.Text = "Map Size";
+            this.mapSizeToolStripMenuItem.Click += new System.EventHandler(this.mapSizeToolStripMenuItem_Click);
         }
 
-        private void createDynamicTable(int numCols, int numRows)
+        private void createDynamicTable()
         {
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.tableLayoutPanel1.ColumnCount = numCols;
-            this.tableLayoutPanel1.RowCount = numRows;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(16, 12);
+            this.tableLayoutPanel1.ColumnCount = this.numCols;
+            this.tableLayoutPanel1.RowCount = this.numRows;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(16, 35);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableCells = new System.Windows.Forms.PictureBox[numCols, numRows];
             for (int i=0; i<numCols; i++)
@@ -103,17 +130,21 @@ namespace GeneticStartupsWindows
             this.tableLayoutPanel1.Size = new System.Drawing.Size(tableWidth, tableHeight);
         }
 
-        private void setFinalLayout()
+        private void setLayout()
         {
             this.ClientSize = this.tableLayoutPanel1.Size + new System.Drawing.Size(this.cellWidth * 3 / 2, this.cellHeight * 3 / 2);
             this.button1.Location = new System.Drawing.Point(this.tableLayoutPanel1.Size.Width / 5, this.tableLayoutPanel1.Size.Height + this.cellHeight / 2);
             this.button2.Location = new System.Drawing.Point(this.tableLayoutPanel1.Size.Width / 5 * 4 - this.button2.Size.Width / 2, this.tableLayoutPanel1.Size.Height + this.cellHeight / 2);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+        private void generateMap()
         {
             // In future maybe set the number of columns and rows like
             // http://stackoverflow.com/questions/15623461/adding-pictureboxes-to-tablelayoutpanel-is-very-slow
@@ -134,7 +165,11 @@ namespace GeneticStartupsWindows
             }
 
             Cursor.Current = Cursors.Default;
+        }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.generateMap();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -142,9 +177,23 @@ namespace GeneticStartupsWindows
 
         }
 
+        private void mapSizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            var result = form2.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                this.numCols = form2.numCols;
+                this.numRows = form2.numRows;
+                this.createDynamicTable();
+                this.setLayout();
+            }
 
+        }
+
+        private int numCols = 20;
+        private int numRows = 15;
         private int cellWidth = 40;
         private int cellHeight = 40;
-
     }
 }
