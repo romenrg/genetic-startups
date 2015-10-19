@@ -120,23 +120,25 @@ namespace GeneticStartupsWindows
             this.tableCells = new System.Windows.Forms.PictureBox[numCols, numRows];
             for (int i=0; i<numCols; i++)
             {
-                this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, cellHeight));
+                this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, this.cellHeight));
                 for (int j=0; j<numRows; j++) {
-                    this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, cellWidth));
+                    this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, this.cellWidth));
                     this.tableCells[i, j] = new System.Windows.Forms.PictureBox();
                     this.tableLayoutPanel1.Controls.Add(this.tableCells[i, j], i, j);
                 }
             }
-            int tableWidth = (numCols + 1) * cellWidth;
-            int tableHeight = (numRows + 1) * cellHeight;
+            int tableWidth = (numCols * (this.cellWidth + 2)) + 2;
+            int tableHeight = (numRows * (this.cellHeight + 2)) + 2;
             this.tableLayoutPanel1.Size = new System.Drawing.Size(tableWidth, tableHeight);
         }
 
         private void setLayout()
         {
-            this.ClientSize = this.tableLayoutPanel1.Size + new System.Drawing.Size(this.cellWidth * 3 / 2, this.cellHeight * 3 / 2);
-            this.button1.Location = new System.Drawing.Point(this.tableLayoutPanel1.Size.Width / 5, this.tableLayoutPanel1.Size.Height + this.cellHeight / 2);
-            this.button2.Location = new System.Drawing.Point(this.tableLayoutPanel1.Size.Width / 5 * 4 - this.button2.Size.Width / 2, this.tableLayoutPanel1.Size.Height + this.cellHeight / 2);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = this.tableLayoutPanel1.Size + new System.Drawing.Size(this.cellWidth * 3 / 2, this.tableLayoutPanel1.Location.Y + this.cellHeight * 3 / 2);
+            this.button1.Location = new System.Drawing.Point(this.tableLayoutPanel1.Size.Width / 5, this.tableLayoutPanel1.Location.Y + this.tableLayoutPanel1.Size.Height + this.cellHeight / 2);
+            this.button2.Location = new System.Drawing.Point(this.tableLayoutPanel1.Size.Width / 5 * 4 - this.button2.Size.Width / 2, this.tableLayoutPanel1.Location.Y + this.tableLayoutPanel1.Size.Height + this.cellHeight / 2);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
@@ -197,7 +199,7 @@ namespace GeneticStartupsWindows
 
         private int numCols = 20;
         private int numRows = 15;
-        private int cellWidth = 40;
-        private int cellHeight = 40;
+        private int cellWidth = 30;
+        private int cellHeight = 30;
     }
 }
