@@ -132,6 +132,7 @@ namespace GeneticStartupsWindows
             this.tableLayoutPanel1.Size = new System.Drawing.Size(tableWidth, tableHeight);
         }
 
+
         private void setLayout()
         {
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
