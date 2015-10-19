@@ -115,7 +115,7 @@ namespace GeneticStartupsWindows
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
             this.tableLayoutPanel1.ColumnCount = this.numCols;
             this.tableLayoutPanel1.RowCount = this.numRows;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(16, 35);
+            //this.tableLayoutPanel1.Location = new System.Drawing.Point(16, 35);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableCells = new System.Windows.Forms.PictureBox[numCols, numRows];
             for (int i=0; i<numCols; i++)
@@ -136,9 +136,20 @@ namespace GeneticStartupsWindows
         {
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = this.tableLayoutPanel1.Size + new System.Drawing.Size(this.cellWidth * 3 / 2, this.tableLayoutPanel1.Location.Y + this.cellHeight * 3 / 2);
-            this.button1.Location = new System.Drawing.Point(this.tableLayoutPanel1.Size.Width / 5, this.tableLayoutPanel1.Location.Y + this.tableLayoutPanel1.Size.Height + this.cellHeight / 2);
-            this.button2.Location = new System.Drawing.Point(this.tableLayoutPanel1.Size.Width / 5 * 4 - this.button2.Size.Width / 2, this.tableLayoutPanel1.Location.Y + this.tableLayoutPanel1.Size.Height + this.cellHeight / 2);
+
+            if((this.tableLayoutPanel1.Size.Width + this.cellWidth) < (this.button1.Size.Width + this.button1.Size.Width))
+            {
+                this.ClientSize = new System.Drawing.Size(this.button1.Size.Width + this.button1.Size.Width + this.cellWidth * 4, this.tableLayoutPanel1.Size.Height + menuStrip1.Size.Height + this.cellHeight * 3);
+            }
+            else
+            {
+                this.ClientSize = this.tableLayoutPanel1.Size + new System.Drawing.Size(this.cellWidth * 2, menuStrip1.Size.Height + this.cellHeight * 3);
+            }
+
+            this.tableLayoutPanel1.Location = new System.Drawing.Point((this.ClientSize.Width - this.tableLayoutPanel1.Size.Width) / 2, (this.ClientSize.Height - this.tableLayoutPanel1.Size.Height) / 2);
+
+            this.button1.Location = new System.Drawing.Point(this.ClientSize.Width / 5, this.tableLayoutPanel1.Size.Height + menuStrip1.Size.Height + this.cellHeight * 5 / 3);
+            this.button2.Location = new System.Drawing.Point(this.ClientSize.Width / 5 * 4 - this.button2.Size.Width, this.tableLayoutPanel1.Size.Height + menuStrip1.Size.Height + this.cellHeight * 5 / 3);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
