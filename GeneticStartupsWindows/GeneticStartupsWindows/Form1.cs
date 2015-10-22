@@ -51,6 +51,7 @@ namespace GeneticStartupsWindows
             this.button2.Text = "Start Evolution";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Enabled = false;
             // Form1
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -150,6 +151,7 @@ namespace GeneticStartupsWindows
         private void button1_Click(object sender, EventArgs e)
         {
             this.generateMap();
+            this.button2.Enabled = true;
         }
 
         private void button2_Click(object sender, EventArgs e)
