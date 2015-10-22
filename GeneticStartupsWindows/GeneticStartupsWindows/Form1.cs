@@ -106,7 +106,7 @@ namespace GeneticStartupsWindows
         {
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.calculateClientSize();
+            this.ClientSize = this.uiAritmetics.calculateClientSize(this.tableLayoutPanel1.Size, this.menuStrip1.Size, this.cellHeight, this.cellWidth, this.button1.Size, this.button2.Size);
             this.tableLayoutPanel1.Location = this.uiAritmetics.calculateTableLocationCenteredInContainer(this.tableLayoutPanel1.Size, this.ClientSize);
             this.button1.Location = new System.Drawing.Point(this.ClientSize.Width / 5, this.tableLayoutPanel1.Size.Height + this.menuStrip1.Size.Height + this.cellHeight * 5 / 3);
             this.button2.Location = new System.Drawing.Point(this.ClientSize.Width / 5 * 4 - this.button2.Size.Width, this.tableLayoutPanel1.Size.Height + this.menuStrip1.Size.Height + this.cellHeight * 5 / 3);
@@ -139,20 +139,6 @@ namespace GeneticStartupsWindows
         //  Private methods
         // -----------------------------
 
-        private void calculateClientSize()
-        {
-            int clientHeight = this.tableLayoutPanel1.Size.Height + this.menuStrip1.Size.Height + this.cellHeight * 3;
-            int clientwidthBasedOnTable = this.tableLayoutPanel1.Size.Width + this.cellWidth * 2;
-            int clientWidthBasedOnButtons = (this.button1.Size.Width + this.button2.Size.Width) * 5 / 3;
-            if (clientwidthBasedOnTable < clientWidthBasedOnButtons)
-            {
-                this.ClientSize = new System.Drawing.Size(clientWidthBasedOnButtons, clientHeight);
-            }
-            else
-            {
-                this.ClientSize = new System.Drawing.Size(clientwidthBasedOnTable, clientHeight);
-            }
-        }
 
 
         // -----------------------------
