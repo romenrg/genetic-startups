@@ -144,11 +144,7 @@ namespace GeneticStartupsWindows
         // -----------------------------
         //  Private methods
         // -----------------------------
-//        private Image transformActionEnumToImage()
-//        {
-//            switch()
-//                case GeneticStartupsWindows.Properties.Resources.entrepreneur_starting
-//        }
+
 
 
         // -----------------------------
