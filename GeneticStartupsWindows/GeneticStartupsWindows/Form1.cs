@@ -188,8 +188,8 @@ namespace GeneticStartupsWindows
         // -----------------------------
 
         private Genetics genetics;
-        private int numCols = 15;
-        private int numRows = 10;
+        private int numCols = 28;
+        private int numRows = 12;
         private int cellWidth = 40;
         private int cellHeight = 40;
         private UIAritmetics uiAritmetics;

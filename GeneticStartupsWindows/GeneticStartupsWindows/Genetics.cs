@@ -54,37 +54,37 @@ namespace GeneticStartupsWindows
         {
             percentagesOfActionsPerQ = new Dictionary<Actions, int>[4];
             percentagesOfActionsPerQ[0] = new Dictionary<Actions, int>();
-            percentagesOfActionsPerQ[0][Actions.None]     = 40;
-            percentagesOfActionsPerQ[0][Actions.Advisor]  = 30;
-            percentagesOfActionsPerQ[0][Actions.Circus]   = 20;
+            percentagesOfActionsPerQ[0][Actions.None]     = 65;
+            percentagesOfActionsPerQ[0][Actions.Advisor]  = 15;
+            percentagesOfActionsPerQ[0][Actions.Circus]   = 10;
             percentagesOfActionsPerQ[0][Actions.Team]     = 4;
-            percentagesOfActionsPerQ[0][Actions.Product]  = 3;
-            percentagesOfActionsPerQ[0][Actions.Feedback] = 2;
+            percentagesOfActionsPerQ[0][Actions.Product]  = 2;
+            percentagesOfActionsPerQ[0][Actions.Feedback] = 3;
             percentagesOfActionsPerQ[0][Actions.Investor] = 1;
             percentagesOfActionsPerQ[1] = new Dictionary<Actions, int>();
-            percentagesOfActionsPerQ[1][Actions.None] = 30;
-            percentagesOfActionsPerQ[1][Actions.Advisor] = 20;
-            percentagesOfActionsPerQ[1][Actions.Circus] = 30;
-            percentagesOfActionsPerQ[1][Actions.Team] = 5;
-            percentagesOfActionsPerQ[1][Actions.Product] = 8;
+            percentagesOfActionsPerQ[1][Actions.None] = 45;
+            percentagesOfActionsPerQ[1][Actions.Advisor] = 10;
+            percentagesOfActionsPerQ[1][Actions.Circus] = 23;
+            percentagesOfActionsPerQ[1][Actions.Team] = 8;
+            percentagesOfActionsPerQ[1][Actions.Product] = 7;
             percentagesOfActionsPerQ[1][Actions.Feedback] = 5;
             percentagesOfActionsPerQ[1][Actions.Investor] = 2;
             percentagesOfActionsPerQ[2] = new Dictionary<Actions, int>();
-            percentagesOfActionsPerQ[2][Actions.None] = 40;
-            percentagesOfActionsPerQ[2][Actions.Advisor] = 10;
+            percentagesOfActionsPerQ[2][Actions.None] = 55;
+            percentagesOfActionsPerQ[2][Actions.Advisor] = 5;
             percentagesOfActionsPerQ[2][Actions.Circus] = 10;
-            percentagesOfActionsPerQ[2][Actions.Team] = 10;
+            percentagesOfActionsPerQ[2][Actions.Team] = 7;
             percentagesOfActionsPerQ[2][Actions.Product] = 10;
-            percentagesOfActionsPerQ[2][Actions.Feedback] = 15;
-            percentagesOfActionsPerQ[2][Actions.Investor] = 5;
+            percentagesOfActionsPerQ[2][Actions.Feedback] = 10;
+            percentagesOfActionsPerQ[2][Actions.Investor] = 3;
             percentagesOfActionsPerQ[3] = new Dictionary<Actions, int>();
-            percentagesOfActionsPerQ[3][Actions.None] = 50;
-            percentagesOfActionsPerQ[3][Actions.Advisor] = 5;
+            percentagesOfActionsPerQ[3][Actions.None] = 70;
+            percentagesOfActionsPerQ[3][Actions.Advisor] = 3;
             percentagesOfActionsPerQ[3][Actions.Circus] = 5;
             percentagesOfActionsPerQ[3][Actions.Team] = 5;
-            percentagesOfActionsPerQ[3][Actions.Product] = 10;
-            percentagesOfActionsPerQ[3][Actions.Feedback] = 15;
-            percentagesOfActionsPerQ[3][Actions.Investor] = 10;
+            percentagesOfActionsPerQ[3][Actions.Product] = 3;
+            percentagesOfActionsPerQ[3][Actions.Feedback] = 9;
+            percentagesOfActionsPerQ[3][Actions.Investor] = 5;
         }
 
         private Actions generateCellContent(int i, int j)
@@ -114,7 +114,7 @@ namespace GeneticStartupsWindows
         {
             int currentRange = 0, i = 0;
             Actions currentAction = Actions.None;
-            while (currentRange <= randomNumber)
+            while (currentRange < randomNumber)
             {
                 currentRange += percentagesOfActionsPerQ[quarter][(Actions)i];
                 currentAction = (Actions)i;
