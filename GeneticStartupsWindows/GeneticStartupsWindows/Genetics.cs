@@ -77,11 +77,11 @@ namespace GeneticStartupsWindows
             this.percentagesOfActionsPerQ[1][Actions.BadNews] = 5;
             this.percentagesOfActionsPerQ[2] = new Dictionary<Actions, int>();
             this.percentagesOfActionsPerQ[2][Actions.None] = 55;
-            this.percentagesOfActionsPerQ[2][Actions.Advisor] = 4;
-            this.percentagesOfActionsPerQ[2][Actions.Circus] = 5;
+            this.percentagesOfActionsPerQ[2][Actions.Advisor] = 5;
+            this.percentagesOfActionsPerQ[2][Actions.Circus] = 7;
             this.percentagesOfActionsPerQ[2][Actions.Team] = 5;
-            this.percentagesOfActionsPerQ[2][Actions.Product] = 7;
-            this.percentagesOfActionsPerQ[2][Actions.Feedback] = 8;
+            this.percentagesOfActionsPerQ[2][Actions.Product] = 5;
+            this.percentagesOfActionsPerQ[2][Actions.Feedback] = 7;
             this.percentagesOfActionsPerQ[2][Actions.Investor] = 3;
             this.percentagesOfActionsPerQ[2][Actions.Doubts] = 1;
             this.percentagesOfActionsPerQ[2][Actions.Sales] = 4;
@@ -90,13 +90,13 @@ namespace GeneticStartupsWindows
             this.percentagesOfActionsPerQ[3][Actions.None] = 70;
             this.percentagesOfActionsPerQ[3][Actions.Advisor] = 3;
             this.percentagesOfActionsPerQ[3][Actions.Circus] = 5;
-            this.percentagesOfActionsPerQ[3][Actions.Team] = 5;
+            this.percentagesOfActionsPerQ[3][Actions.Team] = 3;
             this.percentagesOfActionsPerQ[3][Actions.Product] = 3;
             this.percentagesOfActionsPerQ[3][Actions.Feedback] = 4;
-            this.percentagesOfActionsPerQ[3][Actions.Investor] = 5;
+            this.percentagesOfActionsPerQ[3][Actions.Investor] = 3;
             this.percentagesOfActionsPerQ[3][Actions.Doubts] = 0;
-            this.percentagesOfActionsPerQ[3][Actions.Sales] = 5;
-            this.percentagesOfActionsPerQ[3][Actions.BadNews] = 0;
+            this.percentagesOfActionsPerQ[3][Actions.Sales] = 6;
+            this.percentagesOfActionsPerQ[3][Actions.BadNews] = 3;
         }
 
         private Actions generateCellContent(int i, int j)
