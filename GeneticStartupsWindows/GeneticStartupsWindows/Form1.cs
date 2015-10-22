@@ -25,6 +25,8 @@ namespace GeneticStartupsWindows
 
         public void createBasicLayout()
         {
+            //Icon
+            this.Icon = GeneticStartupsWindows.Properties.Resources.entrepreneur_starting_ico;
             // Creating elements
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
@@ -182,8 +184,8 @@ namespace GeneticStartupsWindows
 
         private int numCols = 20;
         private int numRows = 15;
-        private int cellWidth = 30;
-        private int cellHeight = 30;
+        private int cellWidth = 35;
+        private int cellHeight = 35;
         private UIAritmetics uiAritmetics;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox[,] tableCells;

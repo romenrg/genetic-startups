@@ -101,6 +101,16 @@ namespace GeneticStartupsWindows.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
+        /// </summary>
+        internal static System.Drawing.Icon entrepreneur_starting_ico {
+            get {
+                object obj = ResourceManager.GetObject("entrepreneur_starting_ico", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap entrepreneur_success {
