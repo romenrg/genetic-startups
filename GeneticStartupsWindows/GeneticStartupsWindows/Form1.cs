@@ -188,10 +188,10 @@ namespace GeneticStartupsWindows
         // -----------------------------
 
         private Genetics genetics;
-        private int numCols = 28;
-        private int numRows = 12;
-        private int cellWidth = 40;
-        private int cellHeight = 40;
+        private int numCols = 24;
+        private int numRows = 11;
+        private int cellWidth = 45;
+        private int cellHeight = 45;
         private UIAritmetics uiAritmetics;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox[,] tableCells;

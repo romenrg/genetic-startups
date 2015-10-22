@@ -12,6 +12,28 @@ namespace GeneticStartupsWindows.Tests
     public class GeneticsTests
     {
         [TestMethod()]
+        public void generatedPercentagesTest()
+        {
+            Genetics genetics = new Genetics(20, 20);
+            int totalPercentages;
+            for (int i=0; i< 4; i++)
+            {
+                totalPercentages = genetics.percentagesOfActionsPerQ[i][Genetics.Actions.None] +
+                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Advisor] +
+                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Circus] +
+                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Team] +
+                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Product] +
+                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Feedback] +
+                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Investor] +
+                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Doubts] +
+                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Sales] +
+                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.BadNews];
+                Assert.AreEqual(100, totalPercentages);
+
+            }
+        }
+
+        [TestMethod()]
         public void createBoardFirstQuarterDistributionTest()
         {
             Genetics genetics = new Genetics(20, 20);
