@@ -94,7 +94,7 @@ namespace GeneticStartupsWindows
             for (int i=0; i<this.numCols; i++)
             {
                 this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, this.cellHeight));
-                for (int j=0; j<numRows; j++) {
+                for (int j=0; j<this.numRows; j++) {
                     this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, this.cellWidth));
                     this.tableCells[i, j] = new System.Windows.Forms.PictureBox();
                     this.tableLayoutPanel1.Controls.Add(this.tableCells[i, j], i, j);
@@ -126,11 +126,14 @@ namespace GeneticStartupsWindows
             // In future maybe set the number of columns and rows like
             // http://stackoverflow.com/questions/15623461/adding-pictureboxes-to-tablelayoutpanel-is-very-slow
             Cursor.Current = Cursors.WaitCursor;
+            this.genetics = new Genetics(this.numCols, this.numRows);
+            this.genetics.createBoard();
             for (int i = 0; i < this.tableLayoutPanel1.ColumnCount; i++)
             {
                 for (int j = 0; j < this.tableLayoutPanel1.RowCount; j++)
                 {
-                    this.tableCells[i, j].Image = GeneticStartupsWindows.Properties.Resources.entrepreneur_starting;
+                    //this.tableCells[i, j].Image = GeneticStartupsWindows.Properties.Resources.entrepreneur_starting;
+                    this.tableCells[i, j].Image = this.genetics.getIconForPos(i, j);
                     this.tableCells[i, j].SizeMode = PictureBoxSizeMode.Zoom;
                 }
             }
@@ -141,7 +144,11 @@ namespace GeneticStartupsWindows
         // -----------------------------
         //  Private methods
         // -----------------------------
-
+//        private Image transformActionEnumToImage()
+//        {
+//            switch()
+//                case GeneticStartupsWindows.Properties.Resources.entrepreneur_starting
+//        }
 
 
         // -----------------------------
@@ -184,10 +191,11 @@ namespace GeneticStartupsWindows
         //  Attributes
         // -----------------------------
 
-        private int numCols = 20;
-        private int numRows = 15;
-        private int cellWidth = 35;
-        private int cellHeight = 35;
+        private Genetics genetics;
+        private int numCols = 15;
+        private int numRows = 10;
+        private int cellWidth = 40;
+        private int cellHeight = 40;
         private UIAritmetics uiAritmetics;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox[,] tableCells;

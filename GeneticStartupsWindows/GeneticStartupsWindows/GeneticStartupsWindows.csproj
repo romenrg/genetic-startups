@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Genetics.cs" />
     <Compile Include="UIAritmetics.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
