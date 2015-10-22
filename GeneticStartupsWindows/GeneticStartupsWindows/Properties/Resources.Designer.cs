@@ -143,6 +143,16 @@ namespace GeneticStartupsWindows.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap product_release {
+            get {
+                object obj = ResourceManager.GetObject("product_release", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap startups_circus {
             get {
                 object obj = ResourceManager.GetObject("startups_circus", resourceCulture);
