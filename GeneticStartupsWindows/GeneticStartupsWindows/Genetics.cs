@@ -19,7 +19,8 @@ namespace GeneticStartupsWindows
         private int numCols;
         private int numRows;
 
-        public bool[,] population;
+        public bool[][] population;
+        public List<KeyValuePair<int, int>> populationIndividualScores;
 
         public int numOfBinaryDigitsForStartCells;
         public int numOfBinaryDigitsForSteps;
@@ -58,13 +59,35 @@ namespace GeneticStartupsWindows
         {
             this.numOfBinaryDigitsForStartCells = (int)Math.Ceiling(Math.Log(this.numRows, 2));
             this.numOfBinaryDigitsForSteps = (int)Math.Ceiling(Math.Log(this.possibleDirections, 2)) * stepsAllowed;
-            this.population = new bool[populationSize, numOfBinaryDigitsForStartCells + numOfBinaryDigitsForSteps];
+            //this.population = new bool[populationSize, numOfBinaryDigitsForStartCells + numOfBinaryDigitsForSteps];
+            this.population = new bool[populationSize][];
+            for (int i = 0; i < populationSize; i++)
+                this.population[i] = new bool[numOfBinaryDigitsForStartCells + numOfBinaryDigitsForSteps];
+        }
+
+        public void generateScores()
+        {
+            this.populationIndividualScores = new List<KeyValuePair<int, int>>();
+            for (int i = 0; i < this.population.Length; i++)
+                this.populationIndividualScores.Add(new KeyValuePair<int, int>(i, this.fitness(this.population[i])));
+            this.populationIndividualScores.Sort((x, y) => x.Value.CompareTo(y.Value));
         }
 
 
         // -----------------------------
         //  Private methods
         // -----------------------------
+
+        private int fitness(bool[] individual)
+        {
+            // Now we should check the squares the individual is visiting and
+            // must have a data structure with the possible values of each action
+            // E.G. advisor is a random number between -15 and 5
+            // Finish is -50 (failure) or 50 (success)
+            // To sort multiple winning solutions we add the number of remaining squares to the score
+            // E.G. If winning in the 5th square out of 20, the score will be 50 + 15 = 65;
+            return 0;
+        }        
 
         private void generatePercentagesOfActionsPerQ()
         {

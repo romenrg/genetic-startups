@@ -71,6 +71,16 @@ namespace GeneticStartupsWindows.Tests
             genetics.generatePopulation(10, 19);
             Assert.AreEqual(5, genetics.numOfBinaryDigitsForStartCells);
             Assert.AreEqual(2*19, genetics.numOfBinaryDigitsForSteps);
+            Assert.AreEqual(10, genetics.population.Length);
+        }
+
+        [TestMethod()]
+        public void generateScoresTest()
+        {
+            Genetics genetics = new Genetics(20, 20);
+            genetics.generatePopulation(10, 19);
+            genetics.generateScores();
+            Assert.AreEqual(10, genetics.populationIndividualScores.Count);
         }
 
         //[TestMethod()]

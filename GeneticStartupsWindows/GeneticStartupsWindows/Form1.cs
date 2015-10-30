@@ -164,7 +164,7 @@ namespace GeneticStartupsWindows
         // -----------------------------
         private void showBestCandidate()
         {
-
+            this.genetics.generateScores();
         }
 
 
