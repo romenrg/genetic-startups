@@ -29,7 +29,6 @@ namespace GeneticStartupsWindows.Tests
                 genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Sales] +
                 genetics.percentagesOfActionsPerQ[i][Genetics.Actions.BadNews];
                 Assert.AreEqual(100, totalPercentages);
-
             }
         }
 
@@ -63,6 +62,15 @@ namespace GeneticStartupsWindows.Tests
             Assert.AreNotEqual(0, numerOfAdvisorCells1Q);
             Assert.AreNotEqual(numberOfCells1Q, numerOfEmptyCells1Q);
             Assert.AreNotEqual(numberOfCells1Q, numerOfAdvisorCells1Q);
+        }
+
+        [TestMethod()]
+        public void generatePopulationTest()
+        {
+            Genetics genetics = new Genetics(20, 20);
+            genetics.generatePopulation(10, 19);
+            Assert.AreEqual(5, genetics.numOfBinaryDigitsForStartCells);
+            Assert.AreEqual(2*19, genetics.numOfBinaryDigitsForSteps);
         }
 
         //[TestMethod()]

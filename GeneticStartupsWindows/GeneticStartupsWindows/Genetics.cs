@@ -16,9 +16,18 @@ namespace GeneticStartupsWindows
         public Dictionary<Actions, int>[] percentagesOfActionsPerQ { get; set; }
 
         private Random generateRandomNum;
-
         private int numCols;
         private int numRows;
+
+        public bool[,] population;
+
+        public int numOfBinaryDigitsForStartCells;
+        public int numOfBinaryDigitsForSteps;
+        public int possibleDirections = 4;
+
+        // -----------------------------
+        //  Public methods
+        // -----------------------------
 
         public Genetics(int numCols, int numRows)
         {
@@ -43,6 +52,13 @@ namespace GeneticStartupsWindows
         public Image getIconForPos(int i, int j)
         {
             return this.transformActionEnumToImage(i, j);
+        }
+
+        public void generatePopulation(int populationSize, int stepsAllowed)
+        {
+            this.numOfBinaryDigitsForStartCells = (int)Math.Ceiling(Math.Log(this.numRows, 2));
+            this.numOfBinaryDigitsForSteps = (int)Math.Ceiling(Math.Log(this.possibleDirections, 2)) * stepsAllowed;
+            this.population = new bool[populationSize, numOfBinaryDigitsForStartCells + numOfBinaryDigitsForSteps];
         }
 
 
@@ -88,11 +104,11 @@ namespace GeneticStartupsWindows
             this.percentagesOfActionsPerQ[2][Actions.BadNews] = 8;
             this.percentagesOfActionsPerQ[3] = new Dictionary<Actions, int>();
             this.percentagesOfActionsPerQ[3][Actions.None] = 70;
-            this.percentagesOfActionsPerQ[3][Actions.Advisor] = 3;
+            this.percentagesOfActionsPerQ[3][Actions.Advisor] = 2;
             this.percentagesOfActionsPerQ[3][Actions.Circus] = 4;
             this.percentagesOfActionsPerQ[3][Actions.Team] = 3;
             this.percentagesOfActionsPerQ[3][Actions.Product] = 3;
-            this.percentagesOfActionsPerQ[3][Actions.Feedback] = 4;
+            this.percentagesOfActionsPerQ[3][Actions.Feedback] = 5;
             this.percentagesOfActionsPerQ[3][Actions.Investor] = 3;
             this.percentagesOfActionsPerQ[3][Actions.Doubts] = 0;
             this.percentagesOfActionsPerQ[3][Actions.Sales] = 7;
@@ -135,14 +151,8 @@ namespace GeneticStartupsWindows
             return currentAction;
         }
 
-        private Actions generateCellContentSecondQuarter(int randomNumber)
-        {
-            return Actions.Circus;
-        }
-
         private Image transformActionEnumToImage(int i, int j)
         {
-            //public enum Actions { None=0, Advisor=1, Circus=2, Team=3, Product=4, Feedback=5, Investor=6}
             switch (this.matrix[i, j]) {
                 case Actions.None:
                     return null;

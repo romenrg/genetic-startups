@@ -12,6 +12,24 @@ namespace GeneticStartupsWindows
 {
     public partial class Form1 : Form
     {
+        private Genetics genetics;
+        private int numCols = 24;
+        private int numRows = 11;
+        private int cellWidth = 45;
+        private int cellHeight = 45;
+        private UIAritmetics uiAritmetics;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.PictureBox[,] tableCells;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mapSizeToolStripMenuItem;
+
+        // -----------------------------
+        //  Public methods
+        // -----------------------------
+
         public Form1()
         {
             //InitializeComponent();
@@ -144,7 +162,10 @@ namespace GeneticStartupsWindows
         // -----------------------------
         //  Private methods
         // -----------------------------
+        private void showBestCandidate()
+        {
 
+        }
 
 
         // -----------------------------
@@ -159,7 +180,16 @@ namespace GeneticStartupsWindows
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            // Generate population
+            this.genetics.generatePopulation(10, this.numCols - 1);
+            // for (int i=0; i < MAX_GENERATIONS; i++)
+            // {
+                // Show Best Candidate both path and face+messages (right side)
+                this.showBestCandidate();
+                //if (i < MAX_GENERATIONS - 1) {
+                    // Apply generation operators and create next generation
+                //}
+            // }
         }
 
         private void mapSizeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -181,24 +211,5 @@ namespace GeneticStartupsWindows
         {
 
         }
-
-
-        // -----------------------------
-        //  Attributes
-        // -----------------------------
-
-        private Genetics genetics;
-        private int numCols = 24;
-        private int numRows = 11;
-        private int cellWidth = 45;
-        private int cellHeight = 45;
-        private UIAritmetics uiAritmetics;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.PictureBox[,] tableCells;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mapSizeToolStripMenuItem;
     }
 }
