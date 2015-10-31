@@ -12,7 +12,7 @@ namespace GeneticStartupsWindows.Tests
     public class GeneticsTests
     {
         [TestMethod()]
-        public void generatedPercentagesTest()
+        public void generatePercentagesTest()
         {
             Genetics genetics = new Genetics(20, 20);
             int totalPercentages;
@@ -30,6 +30,14 @@ namespace GeneticStartupsWindows.Tests
                 genetics.percentagesOfActionsPerQ[i][Genetics.Actions.BadNews];
                 Assert.AreEqual(100, totalPercentages);
             }
+        }
+
+        [TestMethod()]
+        public void generateScoreProbabilitiesPerActionTest()
+        {
+            Genetics genetics = new Genetics(20, 20);
+            Assert.AreEqual(-1, genetics.scoresProbabilitiesPerAction[Genetics.Actions.None][0].Key);
+            Assert.AreEqual("Feeling that things don't go as fast as expeceted...", genetics.scoresProbabilitiesPerAction[Genetics.Actions.None][0].Value);
         }
 
         [TestMethod()]
