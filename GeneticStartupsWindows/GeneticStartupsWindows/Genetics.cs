@@ -20,7 +20,7 @@ namespace GeneticStartupsWindows
         private int numCols;
         private int numRows;
 
-        public bool[][] population;
+        public int[][] population;
         public List<KeyValuePair<int, int>> populationIndividualScores;
 
         public int numOfBinaryDigitsForStartCells;
@@ -62,9 +62,14 @@ namespace GeneticStartupsWindows
             this.numOfBinaryDigitsForStartCells = (int)Math.Ceiling(Math.Log(this.numRows, 2));
             this.numOfBinaryDigitsForSteps = (int)Math.Ceiling(Math.Log(this.possibleDirections, 2)) * stepsAllowed;
             //this.population = new bool[populationSize, numOfBinaryDigitsForStartCells + numOfBinaryDigitsForSteps];
-            this.population = new bool[populationSize][];
+            this.population = new int[populationSize][];
             for (int i = 0; i < populationSize; i++)
-                this.population[i] = new bool[numOfBinaryDigitsForStartCells + numOfBinaryDigitsForSteps];
+            {
+                int individualLength = numOfBinaryDigitsForStartCells + numOfBinaryDigitsForSteps;
+                this.population[i] = new int[individualLength];
+                for (int j=0; j< individualLength; j++)
+                    this.population[i][j] = this.generateRandomNum.Next(2);
+            }
         }
 
         public void generateScores()
@@ -75,12 +80,35 @@ namespace GeneticStartupsWindows
             this.populationIndividualScores.Sort((x, y) => x.Value.CompareTo(y.Value));
         }
 
+        // TODO: Probably should be changed as a private method and the test for this is included in the test for the whole individual path
+        public int calculateSquareValue(int x, int y)
+        {
+            Actions squareAction = this.matrix[x, y];
+            int squareValue = 0;
+            for (int i=0; i<this.scoresProbabilitiesPerAction[squareAction].Count; i++)
+            {
+                squareValue += this.scoresProbabilitiesPerAction[squareAction][i].Key;
+            }
+            return squareValue;
+        }
+
+        //TODO: Probably should also be a private method called inside "fitness"
+        public int calculatePathOfIndividual()
+        {
+            //Create an array of pairs x,y to represent cells
+            //Add the initial cell to the first position of the array (converting from binary)
+            //Keep adding the rest of the cells based on the movements in binary and the former cell
+            //Ideas: Maybe better to use string for the content of an individual instead of int[]??
+            //Ideas: Complex conversion to base 10
+            return 0;
+        }
+
 
         // -----------------------------
         //  Private methods
         // -----------------------------
 
-        private int fitness(bool[] individual)
+        private int fitness(int[] individual)
         {
             // Now we should check the squares the individual is visiting and
             // must have a data structure with the possible values of each action
@@ -260,24 +288,24 @@ namespace GeneticStartupsWindows
             int randomNumber = this.generateRandomNum.Next(100);
             if (i < (this.numCols / 4))
             {
-                cellContent = generateCellContentBasedOnQ(0, randomNumber);
+                cellContent = generateCellBasedOnQAndRandomNumber(0, randomNumber);
             }
             else if (i < (2 * this.numCols / 4))
             {
-                cellContent = generateCellContentBasedOnQ(1, randomNumber);
+                cellContent = generateCellBasedOnQAndRandomNumber(1, randomNumber);
             }
             else if (i < (3 * this.numCols / 4))
             {
-                cellContent = generateCellContentBasedOnQ(2, randomNumber);
+                cellContent = generateCellBasedOnQAndRandomNumber(2, randomNumber);
             }
             else
             {
-                cellContent = generateCellContentBasedOnQ(3, randomNumber);
+                cellContent = generateCellBasedOnQAndRandomNumber(3, randomNumber);
             }
             return cellContent;
         }
 
-        private Actions generateCellContentBasedOnQ(int quarter, int randomNumber)
+        private Actions generateCellBasedOnQAndRandomNumber(int quarter, int randomNumber)
         {
             int currentRange = 0, i = 0;
             Actions currentAction = Actions.None;

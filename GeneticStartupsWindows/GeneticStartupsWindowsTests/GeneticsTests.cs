@@ -80,6 +80,7 @@ namespace GeneticStartupsWindows.Tests
             Assert.AreEqual(5, genetics.numOfBinaryDigitsForStartCells);
             Assert.AreEqual(2*19, genetics.numOfBinaryDigitsForSteps);
             Assert.AreEqual(10, genetics.population.Length);
+            Assert.IsTrue(genetics.population[0][0] < 2, "Encoding of individuals must be binary and 1st digit was: "+ genetics.population[0][0]);
         }
 
         [TestMethod()]
@@ -89,6 +90,16 @@ namespace GeneticStartupsWindows.Tests
             genetics.generatePopulation(10, 19);
             genetics.generateScores();
             Assert.AreEqual(10, genetics.populationIndividualScores.Count);
+        }
+
+        [TestMethod()]
+        public void calculateSquareValueTest()
+        {
+            Genetics genetics = new Genetics(20, 20);
+            genetics.matrix = new Genetics.Actions[1, 1];
+            genetics.matrix[0, 0] = Genetics.Actions.Advisor;
+            int squareValue = genetics.calculateSquareValue(0,0);
+            Assert.AreEqual(-32, squareValue);
         }
 
         //[TestMethod()]
