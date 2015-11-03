@@ -19,6 +19,7 @@ namespace GeneticStartupsWindows
         private Random generateRandomNum;
         private int numCols;
         private int numRows;
+        private int numSteps;
 
         public int[][] population;
         public List<KeyValuePair<int, int>> populationIndividualScores;
@@ -31,10 +32,11 @@ namespace GeneticStartupsWindows
         //  Public methods
         // -----------------------------
 
-        public Genetics(int numCols, int numRows)
+        public Genetics(int numCols, int numRows, int numSteps)
         {
             this.numCols = numCols;
             this.numRows = numRows;
+            this.numSteps = numSteps;
             this.generateRandomNum = new Random();
             this.generatePercentagesOfActionsPerQ();
             this.generateScoreProbabilitiesPerAction();
@@ -57,11 +59,10 @@ namespace GeneticStartupsWindows
             return this.transformActionEnumToImage(i, j);
         }
 
-        public void generatePopulation(int populationSize, int stepsAllowed)
+        public void generatePopulation(int populationSize)
         {
             this.numOfBinaryDigitsForStartCells = (int)Math.Ceiling(Math.Log(this.numRows, 2));
-            this.numOfBinaryDigitsForSteps = (int)Math.Ceiling(Math.Log(this.possibleDirections, 2)) * stepsAllowed;
-            //this.population = new bool[populationSize, numOfBinaryDigitsForStartCells + numOfBinaryDigitsForSteps];
+            this.numOfBinaryDigitsForSteps = (int)Math.Ceiling(Math.Log(this.possibleDirections, 2)) * this.numSteps;
             this.population = new int[populationSize][];
             for (int i = 0; i < populationSize; i++)
             {
@@ -83,6 +84,7 @@ namespace GeneticStartupsWindows
         // TODO: Probably should be changed as a private method and the test for this is included in the test for the whole individual path
         public int calculateSquareValue(int x, int y)
         {
+            //TODO: Probably this should include the value for squares out of bounds (e.g. -10)
             Actions squareAction = this.matrix[x, y];
             int squareValue = 0;
             for (int i=0; i<this.scoresProbabilitiesPerAction[squareAction].Count; i++)
@@ -93,14 +95,20 @@ namespace GeneticStartupsWindows
         }
 
         //TODO: Probably should also be a private method called inside "fitness"
-        public int calculatePathOfIndividual()
+        public Tuple<int, int>[] calculatePathOfIndividual(int[] individual)
         {
-            //Create an array of pairs x,y to represent cells
-            //Add the initial cell to the first position of the array (converting from binary)
-            //Keep adding the rest of the cells based on the movements in binary and the former cell
-            //Ideas: Maybe better to use string for the content of an individual instead of int[]??
-            //Ideas: Complex conversion to base 10
-            return 0;
+            Tuple<int, int>[] cellsPath = new Tuple<int, int>[this.numSteps + 1];
+            cellsPath[0] = this.calculateCellFromBinaryFirstPosition(individual.Skip(0).Take(this.numOfBinaryDigitsForStartCells).ToArray());
+            int startingPositionOfMovement = this.numOfBinaryDigitsForStartCells;
+            int numOfCellsToSkip = this.numOfBinaryDigitsForStartCells;
+            Tuple<int, int> previousCell = cellsPath[0];
+            for (int i=1; i<=this.numSteps; i++)
+            {
+                cellsPath[i] = this.calculateCellFromPreviousAndMovement(previousCell, individual.Skip(numOfCellsToSkip).Take(2).ToArray());
+                previousCell = cellsPath[i];
+                numOfCellsToSkip += 2;
+            }
+            return cellsPath;
         }
 
 
@@ -118,6 +126,69 @@ namespace GeneticStartupsWindows
             // E.G. If winning in the 5th square out of 20, the score will be 50 + 15 = 65;
             return 0;
         }        
+
+        private Tuple<int, int> calculateCellFromPreviousAndMovement(Tuple<int, int> previousCell, int[] movement)
+        {
+            // TODO: Something should be done if movements lead to a non-existing square...
+            // Probably in the fitness function it should be considered like -10 (going out of the map)
+            Tuple<int, int> newSquare = new Tuple<int, int>(-1, -1);
+            if (this.movingRight(movement))
+            {
+                newSquare = new Tuple<int, int>(previousCell.Item1 + 1, previousCell.Item2);
+            }
+            else if (this.movingDown(movement))
+            {
+                newSquare = new Tuple<int, int>(previousCell.Item1, previousCell.Item2 - 1);
+            }
+            else if (this.movingLeft(movement))
+            {
+                newSquare = new Tuple<int, int>(previousCell.Item1 - 1, previousCell.Item2);
+            }
+            else if (this.movingUp(movement))
+            {
+                newSquare = new Tuple<int, int>(previousCell.Item1, previousCell.Item2 + 1);
+            }
+            return newSquare;
+        }
+
+        private bool movingRight(int[] movement)
+        {
+            return (movement[0] == 0) && (movement[1] == 0);
+        }
+
+        private bool movingDown(int[] movement)
+        {
+            return (movement[0] == 0) && (movement[1] == 1);
+        }
+
+        private bool movingLeft(int[] movement)
+        {
+            return (movement[0] == 1) && (movement[1] == 0);
+        }
+
+        private bool movingUp(int[] movement)
+        {
+            return (movement[0] == 1) && (movement[1] == 1);
+        }
+
+        private Tuple<int, int> calculateCellFromBinaryFirstPosition(int[] firstSquare)
+        {
+            int decimalValue = this.binaryArrayToDecimalInt(firstSquare);
+            // Number of rows may not be a power of 2. If decimal value is too big, make it circular
+            int decimalValueAdjustedToMax = decimalValue % this.numRows;
+            return new Tuple<int, int>(0, decimalValueAdjustedToMax);
+        }
+
+        private int binaryArrayToDecimalInt(int[] binary)
+        {
+            int decimalValue = 0;
+            int highestPower = binary.Length - 1;
+            for (int i = highestPower; i >= 0; i--)
+            {
+                decimalValue += binary[highestPower - i] * (int)Math.Pow(2, i);
+            }
+            return decimalValue;
+        }
 
         private void generateScoreProbabilitiesPerAction()
         {

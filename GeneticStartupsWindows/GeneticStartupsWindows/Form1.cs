@@ -15,6 +15,7 @@ namespace GeneticStartupsWindows
         private Genetics genetics;
         private int numCols = 24;
         private int numRows = 11;
+        private int numSteps = 10;
         private int cellWidth = 45;
         private int cellHeight = 45;
         private UIAritmetics uiAritmetics;
@@ -144,7 +145,7 @@ namespace GeneticStartupsWindows
             // In future maybe set the number of columns and rows like
             // http://stackoverflow.com/questions/15623461/adding-pictureboxes-to-tablelayoutpanel-is-very-slow
             Cursor.Current = Cursors.WaitCursor;
-            this.genetics = new Genetics(this.numCols, this.numRows);
+            this.genetics = new Genetics(this.numCols, this.numRows, this.numSteps);
             this.genetics.createBoard();
             for (int i = 0; i < this.tableLayoutPanel1.ColumnCount; i++)
             {
@@ -181,7 +182,7 @@ namespace GeneticStartupsWindows
         private void button2_Click(object sender, EventArgs e)
         {
             // Generate population
-            this.genetics.generatePopulation(10, this.numCols - 1);
+            this.genetics.generatePopulation(10);
             // for (int i=0; i < MAX_GENERATIONS; i++)
             // {
                 // Show Best Candidate both path and face+messages (right side)

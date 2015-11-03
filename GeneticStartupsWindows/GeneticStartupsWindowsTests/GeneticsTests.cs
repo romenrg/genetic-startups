@@ -14,7 +14,7 @@ namespace GeneticStartupsWindows.Tests
         [TestMethod()]
         public void generatePercentagesTest()
         {
-            Genetics genetics = new Genetics(20, 20);
+            Genetics genetics = new Genetics(20, 20, 19);
             int totalPercentages;
             for (int i=0; i< 4; i++)
             {
@@ -35,7 +35,7 @@ namespace GeneticStartupsWindows.Tests
         [TestMethod()]
         public void generateScoreProbabilitiesPerActionTest()
         {
-            Genetics genetics = new Genetics(20, 20);
+            Genetics genetics = new Genetics(20, 20, 19);
             Assert.AreEqual(-1, genetics.scoresProbabilitiesPerAction[Genetics.Actions.None][0].Key);
             Assert.AreEqual("Feeling that things don't go as fast as expeceted...", genetics.scoresProbabilitiesPerAction[Genetics.Actions.None][0].Value);
         }
@@ -43,7 +43,7 @@ namespace GeneticStartupsWindows.Tests
         [TestMethod()]
         public void createBoardFirstQuarterDistributionTest()
         {
-            Genetics genetics = new Genetics(20, 20);
+            Genetics genetics = new Genetics(20, 20, 19);
             genetics.createBoard();
             int totalEmtyCells = 0, totalAdvisorCells = 0;
             int percentageEmtyCells = 0, percentageAdvisorCells = 0;
@@ -75,8 +75,8 @@ namespace GeneticStartupsWindows.Tests
         [TestMethod()]
         public void generatePopulationTest()
         {
-            Genetics genetics = new Genetics(20, 20);
-            genetics.generatePopulation(10, 19);
+            Genetics genetics = new Genetics(20, 20, 19);
+            genetics.generatePopulation(10);
             Assert.AreEqual(5, genetics.numOfBinaryDigitsForStartCells);
             Assert.AreEqual(2*19, genetics.numOfBinaryDigitsForSteps);
             Assert.AreEqual(10, genetics.population.Length);
@@ -86,8 +86,8 @@ namespace GeneticStartupsWindows.Tests
         [TestMethod()]
         public void generateScoresTest()
         {
-            Genetics genetics = new Genetics(20, 20);
-            genetics.generatePopulation(10, 19);
+            Genetics genetics = new Genetics(20, 20, 19);
+            genetics.generatePopulation(10);
             genetics.generateScores();
             Assert.AreEqual(10, genetics.populationIndividualScores.Count);
         }
@@ -95,17 +95,35 @@ namespace GeneticStartupsWindows.Tests
         [TestMethod()]
         public void calculateSquareValueTest()
         {
-            Genetics genetics = new Genetics(20, 20);
+            Genetics genetics = new Genetics(20, 20, 19);
             genetics.matrix = new Genetics.Actions[1, 1];
             genetics.matrix[0, 0] = Genetics.Actions.Advisor;
             int squareValue = genetics.calculateSquareValue(0,0);
             Assert.AreEqual(-32, squareValue);
         }
 
+        [TestMethod()]
+        public void calculatePathOfIndividualTest()
+        {
+            Genetics genetics = new Genetics(5, 5, 4);
+            genetics.generatePopulation(10);
+            int[] individual = { 1, 0, 0,
+                                 0, 0,
+                                 0, 0,
+                                 1, 1,
+                                 1, 0};
+            Tuple<int, int>[] individualPath = genetics.calculatePathOfIndividual(individual);
+            Tuple<int, int>[] expectedPath = { new Tuple<int, int>(0, 4), new Tuple<int, int>(1, 4), new Tuple<int, int>(2, 4),
+                                               new Tuple<int, int>(2, 5), new Tuple<int, int>(1, 5)};
+            Assert.AreEqual(expectedPath[0], individualPath[0]);
+            Assert.AreEqual(expectedPath[1], individualPath[1]);
+            Assert.AreEqual(expectedPath[4], individualPath[4]);
+        }
+
         //[TestMethod()]
         //public void getIconForPosTest()
         //{
-        //    Genetics genetics = new Genetics(20, 20);
+        //    Genetics genetics = new Genetics(20, 20, 19);
         //    genetics.matrix[0, 0] = Genetics.Actions.Advisor;
         //    System.Drawing.Image img = genetics.getIconForPos(0, 0);
         //    Assert.AreEqual(GeneticStartupsWindows.Properties.Resources.startups_circus, img);
