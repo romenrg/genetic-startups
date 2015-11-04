@@ -173,39 +173,55 @@ namespace GeneticStartupsWindows
             this.genetics.generateScores();
             Tuple<int, int>[] bestIndividualCellsPath = genetics.getBestIndividualCellsPath();
             int x, y;
-            for (int i = 0; i < bestIndividualCellsPath.Length; i++)
+            for (int i=0; i<Genetics.NUM_GENERATIONS; i++)
             {
-                //this.tableLayoutPanel1.Controls.Add(Brushes.Red, bestIndividualCellsPath[i].Item1, bestIndividualCellsPath[i].Item2)
-                //this.tableLayoutPanel1.
-                //this.tableCells[0,0].
-                x = bestIndividualCellsPath[i].Item1;
-                y = bestIndividualCellsPath[i].Item2;
-                if (genetics.isCellInsideMap(x, y))
+                for (int j = 0; j < bestIndividualCellsPath.Length; j++)
                 {
-                    this.tableCells[x, y].Padding = new Padding(this.cellPadding);
-                    if (this.tableCells[x, y].BackColor == Color.Red)
+                    x = bestIndividualCellsPath[j].Item1;
+                    y = bestIndividualCellsPath[j].Item2;
+                    if (genetics.isCellInsideMap(x, y))
                     {
-                        this.tableCells[x, y].BackColor = Color.PaleVioletRed;
+                        this.applyStylesToVisitedCell(x, y);
+                        await Task.Delay(750);
                     }
-                    else if (this.tableCells[x, y].BackColor == Color.PaleVioletRed)
-                    {
-                        this.tableCells[x, y].BackColor = Color.Purple;
-                    }
-                    else if (this.tableCells[x, y].BackColor == Color.Purple)
-                    {
-                        this.tableCells[x, y].BackColor = Color.Purple;
-                    }
-                    else
-                    {
-                        this.tableCells[x, y].BackColor = Color.Red;
-                    }
-                    await Task.Delay(750);
                 }
-                //Task.Delay(1000);
-                //System.Threading.Thread.Sleep(1000);
+                this.cleanMap();
+                await Task.Delay(750);
             }
         }
 
+        private void applyStylesToVisitedCell(int x, int y)
+        {
+            this.tableCells[x, y].Padding = new Padding(this.cellPadding);
+            if (this.tableCells[x, y].BackColor == Color.LightBlue)
+            {
+                this.tableCells[x, y].BackColor = Color.DeepSkyBlue;
+            }
+            else if (this.tableCells[x, y].BackColor == Color.DeepSkyBlue)
+            {
+                this.tableCells[x, y].BackColor = Color.Blue;
+            }
+            else if (this.tableCells[x, y].BackColor == Color.Blue)
+            {
+                this.tableCells[x, y].BackColor = Color.Blue;
+            }
+            else
+            {
+                this.tableCells[x, y].BackColor = Color.LightBlue;
+            }
+        }
+
+        private void cleanMap()
+        {
+            for (int i = 0; i<this.numCols; i++)
+            {
+                for (int j=0; j<this.numRows; j++)
+                {
+                    this.tableCells[i, j].BackColor = default(Color);
+                    this.tableCells[i, j].Padding = new Padding(0);
+                }
+            }
+        }
 
         // -----------------------------
         //  Event Listeners

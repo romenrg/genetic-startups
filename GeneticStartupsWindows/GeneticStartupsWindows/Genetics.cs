@@ -29,6 +29,7 @@ namespace GeneticStartupsWindows
         public int possibleDirections = 4;
 
         public const int CELL_VALUE_OUT_OF_BOUNDS = -10;
+        public const int NUM_GENERATIONS = 10;
 
         // -----------------------------
         //  Public methods
