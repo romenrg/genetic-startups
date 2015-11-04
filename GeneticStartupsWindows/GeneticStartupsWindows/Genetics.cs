@@ -28,6 +28,8 @@ namespace GeneticStartupsWindows
         public int numOfBinaryDigitsForSteps;
         public int possibleDirections = 4;
 
+        public const int CELL_VALUE_OUT_OF_BOUNDS = -10;
+
         // -----------------------------
         //  Public methods
         // -----------------------------
@@ -81,17 +83,28 @@ namespace GeneticStartupsWindows
             this.populationIndividualScores.Sort((x, y) => x.Value.CompareTo(y.Value));
         }
 
+        public Tuple<int, int>[] getBestIndividualCellsPath()
+        {
+            return calculatePathOfIndividual(this.population[this.populationIndividualScores[0].Key]);
+        }
+
         // TODO: Probably should be changed as a private method and the test for this is included in the test for the whole individual path
         public int calculateSquareValue(int x, int y)
         {
-            //TODO: Probably this should include the value for squares out of bounds (e.g. -10)
-            Actions squareAction = this.matrix[x, y];
-            int squareValue = 0;
-            for (int i=0; i<this.scoresProbabilitiesPerAction[squareAction].Count; i++)
+            if ((x >= 0) && (x < this.numCols) && (y >= 0) && (y < this.numRows))
             {
-                squareValue += this.scoresProbabilitiesPerAction[squareAction][i].Key;
+                Actions squareAction = this.matrix[x, y];
+                int squareValue = 0;
+                for (int i=0; i<this.scoresProbabilitiesPerAction[squareAction].Count; i++)
+                {
+                    squareValue += this.scoresProbabilitiesPerAction[squareAction][i].Key;
+                }
+                return squareValue;
             }
-            return squareValue;
+            else
+            {
+                return -Genetics.CELL_VALUE_OUT_OF_BOUNDS;
+            }
         }
 
         //TODO: Probably should also be a private method called inside "fitness"
@@ -118,13 +131,19 @@ namespace GeneticStartupsWindows
 
         private int fitness(int[] individual)
         {
+            int individualScore = 0;
+            Tuple<int, int>[] individualCellsPath = this.calculatePathOfIndividual(individual);
+            for (int i=0; i<individualCellsPath.Length; i++)
+            {
+                individualScore += this.calculateSquareValue(individualCellsPath[i].Item1, individualCellsPath[i].Item2);
+            }
             // Now we should check the squares the individual is visiting and
             // must have a data structure with the possible values of each action
             // E.G. advisor is a random number between -15 and 5
             // Finish is -50 (failure) or 50 (success)
             // To sort multiple winning solutions we add the number of remaining squares to the score
             // E.G. If winning in the 5th square out of 20, the score will be 50 + 15 = 65;
-            return 0;
+            return individualScore;
         }        
 
         private Tuple<int, int> calculateCellFromPreviousAndMovement(Tuple<int, int> previousCell, int[] movement)
