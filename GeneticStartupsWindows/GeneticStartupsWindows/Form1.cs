@@ -15,9 +15,10 @@ namespace GeneticStartupsWindows
         private Genetics genetics;
         private int numCols = 24;
         private int numRows = 11;
-        private int numSteps = 10;
+        private int numSteps = 23;
         private int cellWidth = 45;
         private int cellHeight = 45;
+        private int cellPadding = 5;
         private UIAritmetics uiAritmetics;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox[,] tableCells;
@@ -153,7 +154,11 @@ namespace GeneticStartupsWindows
                 {
                     //this.tableCells[i, j].Image = GeneticStartupsWindows.Properties.Resources.entrepreneur_starting;
                     this.tableCells[i, j].Image = this.genetics.getIconForPos(i, j);
-                    this.tableCells[i, j].SizeMode = PictureBoxSizeMode.Zoom;
+                    //this.tableCells[i, j].Padding = new Padding(this.cellPadding);
+                    //this.tableCells[i, j].SizeMode = PictureBoxSizeMode.Zoom;
+                    this.tableCells[i, j].SizeMode = PictureBoxSizeMode.StretchImage;
+                    //this.tableCells[i, j].Size = new System.Drawing.Size(this.cellWidth - this.cellPadding, this.cellHeight - this.cellPadding);
+                    //this.tableCells[i, j].SizeMode = PictureBoxSizeMode.CenterImage;
                 }
             }
             Cursor.Current = Cursors.Default;
@@ -163,9 +168,42 @@ namespace GeneticStartupsWindows
         // -----------------------------
         //  Private methods
         // -----------------------------
-        private void showBestCandidate()
+        private async void showBestCandidate()
         {
             this.genetics.generateScores();
+            Tuple<int, int>[] bestIndividualCellsPath = genetics.getBestIndividualCellsPath();
+            int x, y;
+            for (int i = 0; i < bestIndividualCellsPath.Length; i++)
+            {
+                //this.tableLayoutPanel1.Controls.Add(Brushes.Red, bestIndividualCellsPath[i].Item1, bestIndividualCellsPath[i].Item2)
+                //this.tableLayoutPanel1.
+                //this.tableCells[0,0].
+                x = bestIndividualCellsPath[i].Item1;
+                y = bestIndividualCellsPath[i].Item2;
+                if (genetics.isCellInsideMap(x, y))
+                {
+                    this.tableCells[x, y].Padding = new Padding(this.cellPadding);
+                    if (this.tableCells[x, y].BackColor == Color.Red)
+                    {
+                        this.tableCells[x, y].BackColor = Color.PaleVioletRed;
+                    }
+                    else if (this.tableCells[x, y].BackColor == Color.PaleVioletRed)
+                    {
+                        this.tableCells[x, y].BackColor = Color.Purple;
+                    }
+                    else if (this.tableCells[x, y].BackColor == Color.Purple)
+                    {
+                        this.tableCells[x, y].BackColor = Color.Purple;
+                    }
+                    else
+                    {
+                        this.tableCells[x, y].BackColor = Color.Red;
+                    }
+                    await Task.Delay(750);
+                }
+                //Task.Delay(1000);
+                //System.Threading.Thread.Sleep(1000);
+            }
         }
 
 

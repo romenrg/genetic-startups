@@ -88,10 +88,16 @@ namespace GeneticStartupsWindows
             return calculatePathOfIndividual(this.population[this.populationIndividualScores[0].Key]);
         }
 
+
+        public bool isCellInsideMap(int x, int y)
+        {
+            return (x >= 0) && (x < this.numCols) && (y >= 0) && (y < this.numRows);
+        }
+
         // TODO: Probably should be changed as a private method and the test for this is included in the test for the whole individual path
         public int calculateSquareValue(int x, int y)
         {
-            if ((x >= 0) && (x < this.numCols) && (y >= 0) && (y < this.numRows))
+            if (this.isCellInsideMap(x, y))
             {
                 Actions squareAction = this.matrix[x, y];
                 int squareValue = 0;
