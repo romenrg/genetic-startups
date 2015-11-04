@@ -168,25 +168,20 @@ namespace GeneticStartupsWindows
         // -----------------------------
         //  Private methods
         // -----------------------------
-        private async void showBestCandidate()
+        private async Task showBestCandidateOfGeneration()
         {
             this.genetics.generateScores();
             Tuple<int, int>[] bestIndividualCellsPath = genetics.getBestIndividualCellsPath();
             int x, y;
-            for (int i=0; i<Genetics.NUM_GENERATIONS; i++)
+            for (int j = 0; j < bestIndividualCellsPath.Length; j++)
             {
-                for (int j = 0; j < bestIndividualCellsPath.Length; j++)
+                x = bestIndividualCellsPath[j].Item1;
+                y = bestIndividualCellsPath[j].Item2;
+                if (genetics.isCellInsideMap(x, y))
                 {
-                    x = bestIndividualCellsPath[j].Item1;
-                    y = bestIndividualCellsPath[j].Item2;
-                    if (genetics.isCellInsideMap(x, y))
-                    {
-                        this.applyStylesToVisitedCell(x, y);
-                        await Task.Delay(750);
-                    }
+                    this.applyStylesToVisitedCell(x, y);
+                    await Task.Delay(750);
                 }
-                this.cleanMap();
-                await Task.Delay(750);
             }
         }
 
@@ -233,18 +228,20 @@ namespace GeneticStartupsWindows
             this.button2.Enabled = true;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
             // Generate population
             this.genetics.generatePopulation(10);
-            // for (int i=0; i < MAX_GENERATIONS; i++)
-            // {
+            for (int i = 0; i < Genetics.NUM_GENERATIONS; i++)
+            {
                 // Show Best Candidate both path and face+messages (right side)
-                this.showBestCandidate();
-                //if (i < MAX_GENERATIONS - 1) {
-                    // Apply generation operators and create next generation
+                await this.showBestCandidateOfGeneration();
+                this.cleanMap();
+                await Task.Delay(750);
+                //if (i < Genetics.NUM_GENERATIONS - 1) {
+                // Apply generation operators and create next generation
                 //}
-            // }
+            }
         }
 
         private void mapSizeToolStripMenuItem_Click(object sender, EventArgs e)
