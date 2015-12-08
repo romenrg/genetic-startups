@@ -23,6 +23,7 @@ namespace GeneticStartupsWindows
 
         public int[][] population;
         public List<KeyValuePair<int, int>> populationIndividualScores;
+        public int individualLength;
 
         public int numOfBinaryDigitsForStartCells;
         public int numOfBinaryDigitsForSteps;
@@ -47,7 +48,7 @@ namespace GeneticStartupsWindows
 
         public void createBoard()
         {
-            matrix = new Actions[this.numCols, this.numRows];
+            this.matrix = new Actions[this.numCols, this.numRows];
             for (int i = 0; i < this.numCols; i++)
             {
                 for (int j = 0; j < this.numRows; j++)
@@ -69,11 +70,19 @@ namespace GeneticStartupsWindows
             this.population = new int[populationSize][];
             for (int i = 0; i < populationSize; i++)
             {
-                int individualLength = numOfBinaryDigitsForStartCells + numOfBinaryDigitsForSteps;
-                this.population[i] = new int[individualLength];
-                for (int j=0; j< individualLength; j++)
+                this.individualLength = numOfBinaryDigitsForStartCells + numOfBinaryDigitsForSteps;
+                this.population[i] = new int[this.individualLength];
+                for (int j=0; j< this.individualLength; j++)
                     this.population[i][j] = this.generateRandomNum.Next(2);
             }
+        }
+
+        public void newGeneration()
+        {
+            //int[][] selectedIndividuals = this.selection();
+            //int[][] crossedIndividuals = this.crossover();
+            //int[][] mutatedIndividuals = this.mutation();
+            //this.population = selectedIndividuals.Concat(crossedIndividuals).Concat(mutatedIndividuals).ToArray(); ;
         }
 
         public void generateScores()
@@ -81,7 +90,7 @@ namespace GeneticStartupsWindows
             this.populationIndividualScores = new List<KeyValuePair<int, int>>();
             for (int i = 0; i < this.population.Length; i++)
                 this.populationIndividualScores.Add(new KeyValuePair<int, int>(i, this.fitness(this.population[i])));
-            this.populationIndividualScores.Sort((x, y) => x.Value.CompareTo(y.Value));
+            this.populationIndividualScores.Sort((x, y) => -1 * x.Value.CompareTo(y.Value));
         }
 
         public Tuple<int, int>[] getBestIndividualCellsPath()
@@ -110,7 +119,7 @@ namespace GeneticStartupsWindows
             }
             else
             {
-                return -Genetics.CELL_VALUE_OUT_OF_BOUNDS;
+                return Genetics.CELL_VALUE_OUT_OF_BOUNDS;
             }
         }
 
@@ -151,7 +160,25 @@ namespace GeneticStartupsWindows
             // To sort multiple winning solutions we add the number of remaining squares to the score
             // E.G. If winning in the 5th square out of 20, the score will be 50 + 15 = 65;
             return individualScore;
-        }        
+        }
+
+        //private int[][] selection() {
+            //int[][] selectedIndividuals = new int[this.population.Length / 2][];
+            //selectedIndividuals[0] = new int[this.individualLength];
+            //return selectedIndividuals;
+        //}
+
+        //private int[][] crossover() {
+            //int[][] crossedIndividuals = new int[this.population.Length / 2][];
+            //crossedIndividuals[0] = new int[this.individualLength];
+            //return crossedIndividuals;
+        //}
+
+        //private int[][] mutation() {
+            //int[][] mutatedIndividuals = new int[this.population.Length / 2][];
+            //mutatedIndividuals[0] = new int[this.individualLength];
+            //return mutatedIndividuals;
+        //}
 
         private Tuple<int, int> calculateCellFromPreviousAndMovement(Tuple<int, int> previousCell, int[] movement)
         {

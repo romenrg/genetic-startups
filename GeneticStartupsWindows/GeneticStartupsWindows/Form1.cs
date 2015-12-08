@@ -239,7 +239,7 @@ namespace GeneticStartupsWindows
                 this.cleanMap();
                 await Task.Delay(750);
                 //if (i < Genetics.NUM_GENERATIONS - 1) {
-                // Apply generation operators and create next generation
+                    // this.genetics.newGeneration();
                 //}
             }
         }
