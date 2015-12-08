@@ -178,8 +178,10 @@ namespace GeneticStartupsWindows
             int[][] crossedIndividuals = new int[elementsToCross][];
             for (int i=0; i < crossedIndividuals.Length; i+=2)
             {
-                int[] firstElementToCross = this.population[this.populationIndividualScores[i].Key];
-                int[] secondElementToCross = this.population[this.populationIndividualScores[i+1].Key];
+                int randomIndexOfFirstIndividualToMutate = this.generateRandomNum.Next(this.population.Length);
+                int randomIndexOfSecondIndividualToMutate = this.generateRandomNum.Next(this.population.Length);
+                int[] firstElementToCross = this.population[randomIndexOfFirstIndividualToMutate];
+                int[] secondElementToCross = this.population[randomIndexOfSecondIndividualToMutate];
                 int[] newFirstHalf = firstElementToCross.Skip(0).Take(this.individualLength / 2).ToArray();
                 int[] newSecondHalf = secondElementToCross.Skip(this.individualLength / 2).Take(this.individualLength).ToArray();
                 crossedIndividuals[i] = new int[this.individualLength];
@@ -198,7 +200,8 @@ namespace GeneticStartupsWindows
             int[][] mutatedIndividuals = new int[elementsToMutate][];
             for (int i = 0; i < mutatedIndividuals.Length; i++)
             {
-                mutatedIndividuals[i] = this.population[this.populationIndividualScores[i].Key];
+                int randomIndexOfIndividualToMutate = this.generateRandomNum.Next(this.population.Length);
+                mutatedIndividuals[i] = this.population[randomIndexOfIndividualToMutate];
                 int randomElementOfndividual = this.generateRandomNum.Next(mutatedIndividuals[i].Length - 1);
                 if (mutatedIndividuals[i][randomElementOfndividual] == 1)
                     mutatedIndividuals[i][randomElementOfndividual] = 0;
