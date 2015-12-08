@@ -164,7 +164,7 @@ namespace GeneticStartupsWindows.Tests
                                  1, 0};
             Tuple<int, int>[] individualPath = genetics.calculatePathOfIndividual(individual);
             Tuple<int, int>[] expectedPath = { new Tuple<int, int>(0, 4), new Tuple<int, int>(1, 4), new Tuple<int, int>(2, 4),
-                                               new Tuple<int, int>(2, 3), new Tuple<int, int>(1, 3)};
+                                               new Tuple<int, int>(2, 3), new Tuple<int, int>(3, 3)};
             Assert.AreEqual(expectedPath[0], individualPath[0]);
             Assert.AreEqual(expectedPath[1], individualPath[1]);
             Assert.AreEqual(expectedPath[4], individualPath[4]);
@@ -182,7 +182,7 @@ namespace GeneticStartupsWindows.Tests
                                  1, 0};
             Tuple<int, int>[] individualPath = genetics.calculatePathOfIndividual(individual);
             Tuple<int, int>[] expectedPath = { new Tuple<int, int>(0, 4), new Tuple<int, int>(1, 4), new Tuple<int, int>(2, 4),
-                                               new Tuple<int, int>(2, 5), new Tuple<int, int>(1, 5)};
+                                               new Tuple<int, int>(2, 5), new Tuple<int, int>(3, 5)};
             Assert.AreEqual(expectedPath[0], individualPath[0]);
             Assert.AreEqual(expectedPath[1], individualPath[1]);
             Assert.AreEqual(expectedPath[4], individualPath[4]);

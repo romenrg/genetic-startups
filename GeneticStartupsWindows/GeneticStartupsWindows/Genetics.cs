@@ -234,7 +234,7 @@ namespace GeneticStartupsWindows
 
         private bool movingRight(int[] movement)
         {
-            return (movement[0] == 0) && (movement[1] == 0);
+            return ((movement[0] == 0) && (movement[1] == 0)) || ((movement[0] == 1) && (movement[1] == 0));
         }
 
         private bool movingDown(int[] movement)
@@ -244,7 +244,7 @@ namespace GeneticStartupsWindows
 
         private bool movingLeft(int[] movement)
         {
-            return (movement[0] == 1) && (movement[1] == 0);
+            return false;
         }
 
         private bool movingUp(int[] movement)
