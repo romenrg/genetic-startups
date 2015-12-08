@@ -15,7 +15,7 @@ namespace GeneticStartupsWindows
         private Genetics genetics;
         private int numCols = 24;
         private int numRows = 11;
-        private int numSteps = 23;
+        private int numSteps = 35;
         private int cellWidth = 45;
         private int cellHeight = 45;
         private int cellPadding = 5;
