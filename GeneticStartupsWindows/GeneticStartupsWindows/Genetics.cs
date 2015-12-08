@@ -30,7 +30,7 @@ namespace GeneticStartupsWindows
         public int possibleDirections = 4;
 
         public const int CELL_VALUE_OUT_OF_BOUNDS = -10;
-        public const int NUM_GENERATIONS = 10;
+        public const int NUM_GENERATIONS = 15;
 
         // -----------------------------
         //  Public methods
@@ -79,10 +79,13 @@ namespace GeneticStartupsWindows
 
         public void newGeneration()
         {
-            //int[][] selectedIndividuals = this.selection();
-            //int[][] crossedIndividuals = this.crossover();
-            //int[][] mutatedIndividuals = this.mutation();
-            //this.population = selectedIndividuals.Concat(crossedIndividuals).Concat(mutatedIndividuals).ToArray(); ;
+            int elementsToMutate = this.population.Length / 3;
+            int elementsToCross = (this.population.Length / 3) / 2 * 2;
+            int elementsToSelect = this.population.Length - elementsToMutate - elementsToCross;
+            int[][] selectedIndividuals = this.selection(elementsToSelect);
+            int[][] crossedIndividuals = this.crossover(elementsToCross);
+            int[][] mutatedIndividuals = this.mutation(elementsToMutate);
+            this.population = selectedIndividuals.Concat(crossedIndividuals).Concat(mutatedIndividuals).ToArray(); ;
         }
 
         public void generateScores()
@@ -162,23 +165,48 @@ namespace GeneticStartupsWindows
             return individualScore;
         }
 
-        //private int[][] selection() {
-            //int[][] selectedIndividuals = new int[this.population.Length / 2][];
-            //selectedIndividuals[0] = new int[this.individualLength];
-            //return selectedIndividuals;
-        //}
+        private int[][] selection(int elementsToSelect) {
+            int[][] selectedIndividuals = new int[elementsToSelect][];
+            for (int i=0; i<selectedIndividuals.Length; i++)
+            {
+                selectedIndividuals[i] = this.population[this.populationIndividualScores[i].Key];
+            }
+            return selectedIndividuals;
+        }
 
-        //private int[][] crossover() {
-            //int[][] crossedIndividuals = new int[this.population.Length / 2][];
-            //crossedIndividuals[0] = new int[this.individualLength];
-            //return crossedIndividuals;
-        //}
+        private int[][] crossover(int elementsToCross) {
+            int[][] crossedIndividuals = new int[elementsToCross][];
+            for (int i=0; i < crossedIndividuals.Length; i+=2)
+            {
+                int[] firstElementToCross = this.population[this.populationIndividualScores[i].Key];
+                int[] secondElementToCross = this.population[this.populationIndividualScores[i+1].Key];
+                int[] newFirstHalf = firstElementToCross.Skip(0).Take(this.individualLength / 2).ToArray();
+                int[] newSecondHalf = secondElementToCross.Skip(this.individualLength / 2).Take(this.individualLength).ToArray();
+                crossedIndividuals[i] = new int[this.individualLength];
+                newFirstHalf.CopyTo(crossedIndividuals[i], 0);
+                newSecondHalf.CopyTo(crossedIndividuals[i], newFirstHalf.Length);
+                int[] oppositeFirstHalf = secondElementToCross.Skip(0).Take(this.individualLength / 2).ToArray();
+                int[] oppositeSecondHalf = firstElementToCross.Skip(this.individualLength / 2).Take(this.individualLength).ToArray();
+                crossedIndividuals[i+1] = new int[this.individualLength];
+                oppositeFirstHalf.CopyTo(crossedIndividuals[i+1], 0);
+                oppositeSecondHalf.CopyTo(crossedIndividuals[i+1], newFirstHalf.Length);
+            }
+            return crossedIndividuals;
+        }
 
-        //private int[][] mutation() {
-            //int[][] mutatedIndividuals = new int[this.population.Length / 2][];
-            //mutatedIndividuals[0] = new int[this.individualLength];
-            //return mutatedIndividuals;
-        //}
+        private int[][] mutation(int elementsToMutate) {
+            int[][] mutatedIndividuals = new int[elementsToMutate][];
+            for (int i = 0; i < mutatedIndividuals.Length; i++)
+            {
+                mutatedIndividuals[i] = this.population[this.populationIndividualScores[i].Key];
+                int randomElementOfndividual = this.generateRandomNum.Next(mutatedIndividuals[i].Length - 1);
+                if (mutatedIndividuals[i][randomElementOfndividual] == 1)
+                    mutatedIndividuals[i][randomElementOfndividual] = 0;
+                else
+                    mutatedIndividuals[i][randomElementOfndividual] = 1;
+            }
+            return mutatedIndividuals;
+        }
 
         private Tuple<int, int> calculateCellFromPreviousAndMovement(Tuple<int, int> previousCell, int[] movement)
         {

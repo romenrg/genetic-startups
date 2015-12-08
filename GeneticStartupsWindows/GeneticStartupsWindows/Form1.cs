@@ -231,7 +231,7 @@ namespace GeneticStartupsWindows
         private async void button2_Click(object sender, EventArgs e)
         {
             // Generate population
-            this.genetics.generatePopulation(10);
+            this.genetics.generatePopulation(20);
             for (int i = 0; i < Genetics.NUM_GENERATIONS; i++)
             {
                 // Show Best Candidate both path and face+messages (right side)
@@ -241,6 +241,7 @@ namespace GeneticStartupsWindows
                 //if (i < Genetics.NUM_GENERATIONS - 1) {
                     // this.genetics.newGeneration();
                 //}
+                this.genetics.newGeneration();
             }
         }
 
