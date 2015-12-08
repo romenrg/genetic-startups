@@ -243,6 +243,7 @@ namespace GeneticStartupsWindows
                 //}
                 this.genetics.newGeneration();
             }
+            await this.showBestCandidateOfGeneration();
         }
 
         private void mapSizeToolStripMenuItem_Click(object sender, EventArgs e)
