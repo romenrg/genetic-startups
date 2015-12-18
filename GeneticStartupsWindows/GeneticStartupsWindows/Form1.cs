@@ -27,6 +27,10 @@ namespace GeneticStartupsWindows
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mapSizeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem squaresToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
 
         // -----------------------------
         //  Public methods
@@ -54,6 +58,8 @@ namespace GeneticStartupsWindows
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mapSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.squaresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -83,7 +89,9 @@ namespace GeneticStartupsWindows
             this.Load += new System.EventHandler(this.Form1_Load);
             // menuStrip1
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settingsToolStripMenuItem});
+                                                this.settingsToolStripMenuItem,
+                                                this.infoToolStripMenuItem
+                                          });
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(473, 24);
@@ -100,6 +108,21 @@ namespace GeneticStartupsWindows
             this.mapSizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mapSizeToolStripMenuItem.Text = "Map Size";
             this.mapSizeToolStripMenuItem.Click += new System.EventHandler(this.mapSizeToolStripMenuItem_Click);
+            // 
+            // infoToolStripMenuItem
+            // 
+            this.infoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.squaresToolStripMenuItem});
+            this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.infoToolStripMenuItem.Text = "Info";
+            // 
+            // squaresToolStripMenuItem
+            // 
+            this.squaresToolStripMenuItem.Name = "squaresToolStripMenuItem";
+            this.squaresToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.squaresToolStripMenuItem.Text = "Type of Squares";
+            this.squaresToolStripMenuItem.Click += new System.EventHandler(this.squaresToolStripMenuItem_Click);
         }
 
         public void createDynamicTable()
@@ -257,6 +280,17 @@ namespace GeneticStartupsWindows
                 this.numRows = form2.numRows;
                 this.createDynamicTable();
                 this.setLayout();
+                Cursor.Current = Cursors.Default;
+            }
+        }
+
+        private void squaresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form3 form2 = new Form3();
+            var result = form2.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Cursor.Current = Cursors.WaitCursor;
                 Cursor.Current = Cursors.Default;
             }
         }

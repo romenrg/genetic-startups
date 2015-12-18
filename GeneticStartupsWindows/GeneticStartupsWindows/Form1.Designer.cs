@@ -36,6 +36,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mapSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.squaresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -128,7 +130,9 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settingsToolStripMenuItem});
+                                                this.settingsToolStripMenuItem,
+                                                this.infoToolStripMenuItem
+                                          });
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(473, 24);
@@ -149,6 +153,21 @@
             this.mapSizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mapSizeToolStripMenuItem.Text = "Map Size";
             this.mapSizeToolStripMenuItem.Click += new System.EventHandler(this.mapSizeToolStripMenuItem_Click);
+            // 
+            // infoToolStripMenuItem
+            // 
+            this.infoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mapSizeToolStripMenuItem});
+            this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.infoToolStripMenuItem.Text = "info";
+            // 
+            // squaresToolStripMenuItem
+            // 
+            this.squaresToolStripMenuItem.Name = "squaresToolStripMenuItem";
+            this.squaresToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.squaresToolStripMenuItem.Text = "Squares";
+            this.squaresToolStripMenuItem.Click += new System.EventHandler(this.squaresToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -174,11 +193,6 @@
         }
 
         #endregion
-
-
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-
     }
 }
 
