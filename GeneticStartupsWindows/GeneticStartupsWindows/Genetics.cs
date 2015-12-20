@@ -346,6 +346,7 @@ namespace GeneticStartupsWindows
             this.scoresProbabilitiesPerAction[Actions.Investor] = new List<KeyValuePair<int, string>>();
             this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(2, "You get money from FFF"));
             this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(3, "An investor with no tech experience nor startup experience joined"));
+            this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(3, "An investor with no tech experience nor startup experience joined"));
             this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(5, "An investor with tech experience but no startup experience joined"));
             this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(7, "An investor with startup experience (in other fields) joined"));
             this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(7, "An investor with startup experience (in other fields) joined"));

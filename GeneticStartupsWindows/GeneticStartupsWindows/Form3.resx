@@ -117,4 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label2.Text" xml:space="preserve">
+    <value>In the startup world, some individuals present themselves as "advisors",
+while, in reallity, most are just trying to sell you their services or trying to 
+take equity for nothing. Be careful, useful advisors are just a few.</value>
+  </data>
+  <data name="label18.Text" xml:space="preserve">
+    <value>Sadly, as an entrepreneur you will receive many bad news... Many of your 
+ideas will fail, customers will leave you, team members... You may run out 
+of money, face legal issues, your relationships may suffer...</value>
+  </data>
+  <data name="label20.Text" xml:space="preserve">
+    <value>The single most important thing to do as an entrepreneur: selling. It is 
+the only real way to test your product hypotheses and to keep you going... 
+It is always better to get money from customers than from investors.</value>
+  </data>
+  <data name="label23.Text" xml:space="preserve">
+    <value>When you release your product to the market, you will feel like a fool. Things 
+won't probably go the way you planned... But relax, this is just the starting
+point. The sooner you release an MVP, the sooner you will start learning.</value>
+  </data>
+  <data name="label24.Text" xml:space="preserve">
+    <value>In the last few years, tons of startup "events" have emerged. Unfortunately, 
+most of them have become circuses, where entrepreneurs are the clowns. 
+A few may be useful, but in many of them you will be wasting your time.</value>
+  </data>
+  <data name="label25.Text" xml:space="preserve">
+    <value>Once you start receiving feedback from real customers, you will feel 
+astonished. They will use the product in unexpected ways, request new 
+features, new business models... You will now know what the market needs.</value>
+  </data>
 </root>
