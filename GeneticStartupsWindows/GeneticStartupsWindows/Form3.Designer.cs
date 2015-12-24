@@ -1097,7 +1097,7 @@
             this.ClientSize = new System.Drawing.Size(805, 599);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form3";
-            this.Text = "Form3";
+            this.Text = "Types of Squares";
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();

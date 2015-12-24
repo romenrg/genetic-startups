@@ -295,6 +295,7 @@ namespace GeneticStartupsWindows
                 Cursor.Current = Cursors.WaitCursor;
                 this.numCols = form2.numCols;
                 this.numRows = form2.numRows;
+                this.numSteps = this.numCols + this.numRows;
                 this.createDynamicTable();
                 this.setLayout();
                 Cursor.Current = Cursors.Default;
