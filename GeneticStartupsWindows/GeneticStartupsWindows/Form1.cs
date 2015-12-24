@@ -22,6 +22,7 @@ namespace GeneticStartupsWindows
         private UIAritmetics uiAritmetics;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox[,] tableCells;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -53,6 +54,7 @@ namespace GeneticStartupsWindows
             this.Icon = GeneticStartupsWindows.Properties.Resources.entrepreneur_starting_ico;
             // Creating elements
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -63,6 +65,13 @@ namespace GeneticStartupsWindows
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
+            // label1
+            this.label1.Name = "label1";
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Size = new System.Drawing.Size(200, 23);
+            this.label1.AutoSize = true;
+            this.label1.TabIndex = 4;
+            this.label1.Text = "......... Welcome to Genetic Startups world .........";
             // button1
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(92, 23);
@@ -75,12 +84,14 @@ namespace GeneticStartupsWindows
             this.button2.Size = new System.Drawing.Size(90, 23);
             this.button2.TabIndex = 2;
             this.button2.Text = "Start Evolution";
+            this.button2.Enabled = false;
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             this.button2.Enabled = false;
             // Form1
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -154,6 +165,8 @@ namespace GeneticStartupsWindows
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = this.uiAritmetics.calculateClientSize(this.tableLayoutPanel1.Size, this.menuStrip1.Size, this.cellHeight, this.cellWidth, this.button1.Size, this.button2.Size);
             this.tableLayoutPanel1.Location = this.uiAritmetics.calculateTableLocationCenteredInContainer(this.tableLayoutPanel1.Size, this.ClientSize);
+            this.label1.Location = new System.Drawing.Point(this.ClientSize.Width / 2 - this.label1.Size.Width / 2, this.menuStrip1.Size.Height + this.cellHeight * 2 / 5);
+            //this.label1.Location = new System.Drawing.Point(this.ClientSize.Width / 5 * 3, this.tableLayoutPanel1.Size.Height + this.menuStrip1.Size.Height + this.cellHeight * 5 / 3);
             this.button1.Location = new System.Drawing.Point(this.ClientSize.Width / 5, this.tableLayoutPanel1.Size.Height + this.menuStrip1.Size.Height + this.cellHeight * 5 / 3);
             this.button2.Location = new System.Drawing.Point(this.ClientSize.Width / 5 * 4 - this.button2.Size.Width, this.tableLayoutPanel1.Size.Height + this.menuStrip1.Size.Height + this.cellHeight * 5 / 3);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -185,6 +198,7 @@ namespace GeneticStartupsWindows
                 }
             }
             Cursor.Current = Cursors.Default;
+            this.button2.Enabled = true;
         }
 
 
@@ -193,7 +207,6 @@ namespace GeneticStartupsWindows
         // -----------------------------
         private async Task showBestCandidateOfGeneration()
         {
-            this.genetics.generateScores();
             Tuple<int, int>[] bestIndividualCellsPath = genetics.getBestIndividualCellsPath();
             int x, y;
             for (int j = 0; j < bestIndividualCellsPath.Length; j++)
@@ -255,7 +268,9 @@ namespace GeneticStartupsWindows
         {
             // Generate population
             this.genetics.generatePopulation(20);
-            for (int i = 0; i < Genetics.NUM_GENERATIONS; i++)
+            this.genetics.generateScores();
+            this.label1.Text = "Generation: 1" + " / " + Genetics.NUM_GENERATIONS + ". Best score (displayed): " + genetics.populationIndividualScores[0].Value;
+            for (int i = 1; i < Genetics.NUM_GENERATIONS; i++)
             {
                 // Show Best Candidate both path and face+messages (right side)
                 await this.showBestCandidateOfGeneration();
@@ -265,6 +280,8 @@ namespace GeneticStartupsWindows
                     // this.genetics.newGeneration();
                 //}
                 this.genetics.newGeneration();
+                this.genetics.generateScores();
+                this.label1.Text = "Generation: " + (i + 1) + " / " + Genetics.NUM_GENERATIONS + ". Best score (displayed): " + genetics.populationIndividualScores[0].Value;
             }
             await this.showBestCandidateOfGeneration();
         }
@@ -296,6 +313,11 @@ namespace GeneticStartupsWindows
         }
 
         private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
