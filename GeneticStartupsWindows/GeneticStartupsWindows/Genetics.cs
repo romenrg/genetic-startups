@@ -167,21 +167,25 @@ namespace GeneticStartupsWindows
 
         private int[][] selection(int elementsToSelect) {
             int[][] selectedIndividuals = new int[elementsToSelect][];
-            for (int i=0; i<selectedIndividuals.Length; i++)
+            for (int i=0; i< elementsToSelect; i++)
             {
-                selectedIndividuals[i] = this.population[this.populationIndividualScores[i].Key];
+                //TODO: Array must be copied!!! This is a reference
+                //selectedIndividuals[i] = this.population[this.populationIndividualScores[i].Key];
+                selectedIndividuals[i] = (int[])(this.population[this.populationIndividualScores[i].Key]).Clone();
             }
             return selectedIndividuals;
         }
 
         private int[][] crossover(int elementsToCross) {
             int[][] crossedIndividuals = new int[elementsToCross][];
-            for (int i=0; i < crossedIndividuals.Length; i+=2)
+            for (int i=0; i < elementsToCross; i+=2)
             {
                 int randomIndexOfFirstIndividualToMutate = this.generateRandomNum.Next(this.population.Length);
                 int randomIndexOfSecondIndividualToMutate = this.generateRandomNum.Next(this.population.Length);
-                int[] firstElementToCross = this.population[randomIndexOfFirstIndividualToMutate];
-                int[] secondElementToCross = this.population[randomIndexOfSecondIndividualToMutate];
+                //int[] firstElementToCross = this.population[randomIndexOfFirstIndividualToMutate];
+                //int[] secondElementToCross = this.population[randomIndexOfSecondIndividualToMutate];
+                int[] firstElementToCross = (int[])this.population[randomIndexOfFirstIndividualToMutate].Clone();
+                int[] secondElementToCross = (int[])this.population[randomIndexOfSecondIndividualToMutate].Clone();
                 int[] newFirstHalf = firstElementToCross.Skip(0).Take(this.individualLength / 2).ToArray();
                 int[] newSecondHalf = secondElementToCross.Skip(this.individualLength / 2).Take(this.individualLength).ToArray();
                 crossedIndividuals[i] = new int[this.individualLength];
@@ -198,10 +202,11 @@ namespace GeneticStartupsWindows
 
         private int[][] mutation(int elementsToMutate) {
             int[][] mutatedIndividuals = new int[elementsToMutate][];
-            for (int i = 0; i < mutatedIndividuals.Length; i++)
+            for (int i = 0; i < elementsToMutate; i++)
             {
                 int randomIndexOfIndividualToMutate = this.generateRandomNum.Next(this.population.Length);
-                mutatedIndividuals[i] = this.population[randomIndexOfIndividualToMutate];
+                //mutatedIndividuals[i] = this.population[randomIndexOfIndividualToMutate];
+                mutatedIndividuals[i] = (int[])this.population[randomIndexOfIndividualToMutate].Clone();
                 int randomElementOfndividual = this.generateRandomNum.Next(mutatedIndividuals[i].Length - 1);
                 if (mutatedIndividuals[i][randomElementOfndividual] == 1)
                     mutatedIndividuals[i][randomElementOfndividual] = 0;
