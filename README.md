@@ -35,3 +35,9 @@ There will be implementations of this application using 3 different combinations
 - *Native Windows app:* C# + .Net + Windows Forms
 - *NodeJS + REST API + ReactJS*
 - *Java / Spring + REST API + AngularJS*
+
+### Copyright and License
+
+Copyright 2015 Romen Rodríguez-Gil
+
+Licensed under The MIT License (MIT), as described in the file LICENSE.md
