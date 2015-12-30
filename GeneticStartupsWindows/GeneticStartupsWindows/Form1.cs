@@ -29,7 +29,9 @@ namespace GeneticStartupsWindows
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mapSizeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem algorithmToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem squaresToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem licenseToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
 
@@ -61,7 +63,9 @@ namespace GeneticStartupsWindows
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mapSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.algorithmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.squaresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.licenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -100,14 +104,38 @@ namespace GeneticStartupsWindows
             this.Load += new System.EventHandler(this.Form1_Load);
             // menuStrip1
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                                                this.settingsToolStripMenuItem,
-                                                this.infoToolStripMenuItem
+                                                this.infoToolStripMenuItem,
+                                                this.settingsToolStripMenuItem
                                           });
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(473, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "Menu";
+            // infoToolStripMenuItem
+            this.infoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+                this.algorithmToolStripMenuItem,
+                this.squaresToolStripMenuItem,
+                this.licenseToolStripMenuItem
+            });
+            this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.infoToolStripMenuItem.Text = "Info";
+            // algorithmToolStripMenuItem
+            this.algorithmToolStripMenuItem.Name = "algorithmStripMenuItem";
+            this.algorithmToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.algorithmToolStripMenuItem.Text = "The Algorithm";
+            this.algorithmToolStripMenuItem.Click += new System.EventHandler(this.algorithmToolStripMenuItem_Click);
+            // squaresToolStripMenuItem
+            this.squaresToolStripMenuItem.Name = "squaresToolStripMenuItem";
+            this.squaresToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.squaresToolStripMenuItem.Text = "Square Types";
+            this.squaresToolStripMenuItem.Click += new System.EventHandler(this.squaresToolStripMenuItem_Click);
+            // licenseToolStripMenuItem
+            this.licenseToolStripMenuItem.Name = "licenseStripMenuItem";
+            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.licenseToolStripMenuItem.Text = "License";
+            this.licenseToolStripMenuItem.Click += new System.EventHandler(this.licenseToolStripMenuItem_Click);
             // settingsToolStripMenuItem
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mapSizeToolStripMenuItem});
@@ -119,21 +147,6 @@ namespace GeneticStartupsWindows
             this.mapSizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mapSizeToolStripMenuItem.Text = "Map Size";
             this.mapSizeToolStripMenuItem.Click += new System.EventHandler(this.mapSizeToolStripMenuItem_Click);
-            // 
-            // infoToolStripMenuItem
-            // 
-            this.infoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.squaresToolStripMenuItem});
-            this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.infoToolStripMenuItem.Text = "Info";
-            // 
-            // squaresToolStripMenuItem
-            // 
-            this.squaresToolStripMenuItem.Name = "squaresToolStripMenuItem";
-            this.squaresToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.squaresToolStripMenuItem.Text = "Type of Squares";
-            this.squaresToolStripMenuItem.Click += new System.EventHandler(this.squaresToolStripMenuItem_Click);
         }
 
         public void createDynamicTable()
@@ -267,7 +280,7 @@ namespace GeneticStartupsWindows
         private async void button2_Click(object sender, EventArgs e)
         {
             // Generate population
-            this.genetics.generatePopulation(20);
+            this.genetics.generatePopulation(25);
             this.genetics.generateScores();
             this.label1.Text = "Generation: 1" + " / " + Genetics.NUM_GENERATIONS + ". Best score (displayed): " + genetics.populationIndividualScores[0].Value;
             for (int i = 1; i < Genetics.NUM_GENERATIONS; i++)
@@ -302,10 +315,32 @@ namespace GeneticStartupsWindows
             }
         }
 
+        private void algorithmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TheAlgorithmForm theAlgorithmform = new TheAlgorithmForm();
+            var result = theAlgorithmform.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                Cursor.Current = Cursors.Default;
+            }
+        }
+
         private void squaresToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form3 form2 = new Form3();
-            var result = form2.ShowDialog();
+            Form3 form3 = new Form3();
+            var result = form3.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                Cursor.Current = Cursors.Default;
+            }
+        }
+
+        private void licenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LicenseForm licenseForm = new LicenseForm();
+            var result = licenseForm.ShowDialog();
             if (result == DialogResult.OK)
             {
                 Cursor.Current = Cursors.WaitCursor;
