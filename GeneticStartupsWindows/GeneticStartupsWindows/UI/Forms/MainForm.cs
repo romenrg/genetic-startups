@@ -282,7 +282,7 @@ namespace GeneticStartupsWindows
             // Generate population
             this.genetics.generatePopulation(25);
             this.genetics.generateScores();
-            this.label1.Text = "Generation: 1" + " / " + Genetics.NUM_GENERATIONS + ". Best score (displayed): " + genetics.populationIndividualScores[0].Value;
+            this.label1.Text = "Generation: 1" + " / " + Genetics.NUM_GENERATIONS + ". Best score (displayed): " + genetics.individualsSortedByScore[0].Value;
             for (int i = 1; i < Genetics.NUM_GENERATIONS; i++)
             {
                 // Show Best Candidate both path and face+messages (right side)
@@ -294,7 +294,7 @@ namespace GeneticStartupsWindows
                 //}
                 this.genetics.newGeneration();
                 this.genetics.generateScores();
-                this.label1.Text = "Generation: " + (i + 1) + " / " + Genetics.NUM_GENERATIONS + ". Best score (displayed): " + genetics.populationIndividualScores[0].Value;
+                this.label1.Text = "Generation: " + (i + 1) + " / " + Genetics.NUM_GENERATIONS + ". Best score (displayed): " + genetics.individualsSortedByScore[0].Value;
             }
             await this.showBestCandidateOfGeneration();
         }

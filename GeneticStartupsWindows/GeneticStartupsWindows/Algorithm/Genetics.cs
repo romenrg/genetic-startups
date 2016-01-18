@@ -13,8 +13,8 @@ namespace GeneticStartupsWindows
         public enum States { Confusion=0, Success=1, Failure=2}
 
         public Actions [,] matrix { get; set; }
-        public Dictionary<Actions, int>[] percentagesOfActionsPerQ { get; set; }
-        public Dictionary<Actions, List<KeyValuePair<int, string>>> scoresProbabilitiesPerAction { get; set; }
+        public Dictionary<Actions, int>[] actionProbabilityPerQ { get; set; }
+        public Dictionary<Actions, List<KeyValuePair<int, string>>> possibleScoresPerAction { get; set; }
 
         private Random generateRandomNum;
         private int numCols;
@@ -22,7 +22,7 @@ namespace GeneticStartupsWindows
         private int numSteps;
 
         public int[][] population;
-        public List<KeyValuePair<int, int>> populationIndividualScores;
+        public List<KeyValuePair<int, int>> individualsSortedByScore;
         public int individualLength;
 
         public int numOfBinaryDigitsForStartCells;
@@ -90,15 +90,15 @@ namespace GeneticStartupsWindows
 
         public void generateScores()
         {
-            this.populationIndividualScores = new List<KeyValuePair<int, int>>();
+            this.individualsSortedByScore = new List<KeyValuePair<int, int>>();
             for (int i = 0; i < this.population.Length; i++)
-                this.populationIndividualScores.Add(new KeyValuePair<int, int>(i, this.fitness(this.population[i])));
-            this.populationIndividualScores.Sort((x, y) => -1 * x.Value.CompareTo(y.Value));
+                this.individualsSortedByScore.Add(new KeyValuePair<int, int>(i, this.fitness(this.population[i])));
+            this.individualsSortedByScore.Sort((x, y) => -1 * x.Value.CompareTo(y.Value));
         }
 
         public Tuple<int, int>[] getBestIndividualCellsPath()
         {
-            return calculatePathOfIndividual(this.population[this.populationIndividualScores[0].Key]);
+            return calculatePathOfIndividual(this.population[this.individualsSortedByScore[0].Key]);
         }
 
 
@@ -114,9 +114,9 @@ namespace GeneticStartupsWindows
             {
                 Actions squareAction = this.matrix[x, y];
                 int squareValue = 0;
-                for (int i=0; i<this.scoresProbabilitiesPerAction[squareAction].Count; i++)
+                for (int i=0; i<this.possibleScoresPerAction[squareAction].Count; i++)
                 {
-                    squareValue += this.scoresProbabilitiesPerAction[squareAction][i].Key;
+                    squareValue += this.possibleScoresPerAction[squareAction][i].Key;
                 }
                 return squareValue;
             }
@@ -171,7 +171,7 @@ namespace GeneticStartupsWindows
             {
                 //TODO: Array must be copied!!! This is a reference
                 //selectedIndividuals[i] = this.population[this.populationIndividualScores[i].Key];
-                selectedIndividuals[i] = (int[])(this.population[this.populationIndividualScores[i].Key]).Clone();
+                selectedIndividuals[i] = (int[])(this.population[this.individualsSortedByScore[i].Key]).Clone();
             }
             return selectedIndividuals;
         }
@@ -281,166 +281,166 @@ namespace GeneticStartupsWindows
 
         private void generateScoreProbabilitiesPerAction()
         {
-            this.scoresProbabilitiesPerAction = new Dictionary<Actions, List<KeyValuePair<int, string>>>();
-            this.scoresProbabilitiesPerAction[Actions.None] = new List<KeyValuePair<int, string>>();
-            this.scoresProbabilitiesPerAction[Actions.None].Add(new KeyValuePair<int, string>(-1, "Feeling that things don't go as fast as expeceted..."));
-            this.scoresProbabilitiesPerAction[Actions.None].Add(new KeyValuePair<int, string>(-1, "Feeling that things don't go as fast as expeceted..."));
-            this.scoresProbabilitiesPerAction[Actions.None].Add(new KeyValuePair<int, string>(0, "Just one more day in the startup world!"));
-            this.scoresProbabilitiesPerAction[Actions.None].Add(new KeyValuePair<int, string>(0, "Just one more day in the startup world!"));
-            this.scoresProbabilitiesPerAction[Actions.None].Add(new KeyValuePair<int, string>(0, "Just one more day in the startup world!"));
-            this.scoresProbabilitiesPerAction[Actions.None].Add(new KeyValuePair<int, string>(0, "Just one more day in the startup world!"));
-            this.scoresProbabilitiesPerAction[Actions.None].Add(new KeyValuePair<int, string>(0, "Just one more day in the startup world!"));
-            this.scoresProbabilitiesPerAction[Actions.None].Add(new KeyValuePair<int, string>(0, "Just one more day in the startup world!"));
-            this.scoresProbabilitiesPerAction[Actions.None].Add(new KeyValuePair<int, string>(1, "One day closer to success!"));
-            this.scoresProbabilitiesPerAction[Actions.None].Add(new KeyValuePair<int, string>(1, "One day closer to success!"));
-            this.scoresProbabilitiesPerAction[Actions.Advisor] = new List<KeyValuePair<int, string>>();
-            this.scoresProbabilitiesPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(-15, "The 'advisor' turned out to be a liar, had no idea but took big shares"));
-            this.scoresProbabilitiesPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(-10, "The 'advisor' had no idea, gave wrong advice and company suffered"));
-            this.scoresProbabilitiesPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(-6, "You realized the 'advisor' won't help at all"));
-            this.scoresProbabilitiesPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(-6, "You realized the 'advisor' won't help at all"));
-            this.scoresProbabilitiesPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(-4, "The 'advisor' just wanted to sell his/her services"));
-            this.scoresProbabilitiesPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(-4, "The 'advisor' just wanted to sell his/her services"));
-            this.scoresProbabilitiesPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(-4, "The 'advisor' just wanted to sell his/her services"));
-            this.scoresProbabilitiesPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(2, "The 'advisor' nows about the market and may be helful"));
-            this.scoresProbabilitiesPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(5, "The 'advisor' is connected to investors in the field"));
-            this.scoresProbabilitiesPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(10, "The 'advisor' will bring important customers"));
-            this.scoresProbabilitiesPerAction[Actions.Circus] = new List<KeyValuePair<int, string>>();
-            this.scoresProbabilitiesPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(-5, "You should have been working instead; you wasted a lot of time"));
-            this.scoresProbabilitiesPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(-5, "You should have been working instead; you wasted a lot of time"));
-            this.scoresProbabilitiesPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(-5, "You should have been working instead; you wasted a lot of time"));
-            this.scoresProbabilitiesPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(-5, "You should have been working instead; you wasted a lot of time"));
-            this.scoresProbabilitiesPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(-5, "You should have been working instead; you wasted a lot of time"));
-            this.scoresProbabilitiesPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(-2, "You just wasted some time going there, not that bad"));
-            this.scoresProbabilitiesPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(-2, "You just wasted some time going there, not that bad"));
-            this.scoresProbabilitiesPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(2, "Maybe someone you met today will help you in future"));
-            this.scoresProbabilitiesPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(5, "You built useful connections (either partners or potential investors)"));
-            this.scoresProbabilitiesPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(7, "You built very useful connections (someone important or well connected)"));
-            this.scoresProbabilitiesPerAction[Actions.Team] = new List<KeyValuePair<int, string>>();
-            this.scoresProbabilitiesPerAction[Actions.Team].Add(new KeyValuePair<int, string>(-15, "You picked a troublemaker as founder and gave him/her 50% of shares"));
-            this.scoresProbabilitiesPerAction[Actions.Team].Add(new KeyValuePair<int, string>(-3, "The new team member has just left college and is inexperienced"));
-            this.scoresProbabilitiesPerAction[Actions.Team].Add(new KeyValuePair<int, string>(-2, "Another person with the same profile joined"));
-            this.scoresProbabilitiesPerAction[Actions.Team].Add(new KeyValuePair<int, string>(2, "Regular worker joined the company"));
-            this.scoresProbabilitiesPerAction[Actions.Team].Add(new KeyValuePair<int, string>(2, "Regular worker joined the company"));
-            this.scoresProbabilitiesPerAction[Actions.Team].Add(new KeyValuePair<int, string>(2, "Regular worker joined the company"));
-            this.scoresProbabilitiesPerAction[Actions.Team].Add(new KeyValuePair<int, string>(5, "Talented employee joined the company"));
-            this.scoresProbabilitiesPerAction[Actions.Team].Add(new KeyValuePair<int, string>(5, "Talented employee joined the company"));
-            this.scoresProbabilitiesPerAction[Actions.Team].Add(new KeyValuePair<int, string>(7, "Talented employee with startup experience joined the company"));
-            this.scoresProbabilitiesPerAction[Actions.Team].Add(new KeyValuePair<int, string>(7, "Talented person with startup experience and connections in the field joined as co-founder"));
-            this.scoresProbabilitiesPerAction[Actions.Product] = new List<KeyValuePair<int, string>>();
-            this.scoresProbabilitiesPerAction[Actions.Product].Add(new KeyValuePair<int, string>(-3, "You invested too much (time and money) in your MVP"));
-            this.scoresProbabilitiesPerAction[Actions.Product].Add(new KeyValuePair<int, string>(3, "You released an MVP or a very small increment to test the market"));
-            this.scoresProbabilitiesPerAction[Actions.Product].Add(new KeyValuePair<int, string>(3, "You released an MVP or a very small increment to test the market"));
-            this.scoresProbabilitiesPerAction[Actions.Product].Add(new KeyValuePair<int, string>(3, "You released an MVP or a very small increment to test the market"));
-            this.scoresProbabilitiesPerAction[Actions.Product].Add(new KeyValuePair<int, string>(3, "You released an MVP or a very small increment to test the market"));
-            this.scoresProbabilitiesPerAction[Actions.Product].Add(new KeyValuePair<int, string>(3, "You released an MVP or a very small increment to test the market"));
-            this.scoresProbabilitiesPerAction[Actions.Product].Add(new KeyValuePair<int, string>(4, "You released new features after listening to customer feedback and testing the market"));
-            this.scoresProbabilitiesPerAction[Actions.Product].Add(new KeyValuePair<int, string>(4, "You released new features after listening to customer feedback and testing the market"));
-            this.scoresProbabilitiesPerAction[Actions.Product].Add(new KeyValuePair<int, string>(4, "You released new features after listening to customer feedback and testing the market"));
-            this.scoresProbabilitiesPerAction[Actions.Product].Add(new KeyValuePair<int, string>(5, "You embraced Agile methodologies: product delivery is optimized and work environment improved significantly"));
-            this.scoresProbabilitiesPerAction[Actions.Feedback] = new List<KeyValuePair<int, string>>();
-            this.scoresProbabilitiesPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(1, "You included polls in your product"));
-            this.scoresProbabilitiesPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(2, "You read customer emails and comments"));
-            this.scoresProbabilitiesPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(2, "You read customer emails and comments"));
-            this.scoresProbabilitiesPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(3, "You did one usability test with a friend"));
-            this.scoresProbabilitiesPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(3, "You did one usability test with a friend"));
-            this.scoresProbabilitiesPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(5, "You did one usability test with a potential customer"));
-            this.scoresProbabilitiesPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(5, "You did one usability test with a potential customer"));
-            this.scoresProbabilitiesPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(6, "You are tracking user events and reviewing analytics to improve"));
-            this.scoresProbabilitiesPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(6, "You are tracking user events and reviewing analytics to improve"));
-            this.scoresProbabilitiesPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(8, "You performed an A/B test to be sure which change better"));
-            this.scoresProbabilitiesPerAction[Actions.Investor] = new List<KeyValuePair<int, string>>();
-            this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(2, "You get money from FFF"));
-            this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(3, "An investor with no tech experience nor startup experience joined"));
-            this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(3, "An investor with no tech experience nor startup experience joined"));
-            this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(5, "An investor with tech experience but no startup experience joined"));
-            this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(7, "An investor with startup experience (in other fields) joined"));
-            this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(7, "An investor with startup experience (in other fields) joined"));
-            this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(10, "An investor with startup experience in your field joined"));
-            this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(10, "An investor with startup experience in your field joined"));
-            this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(15, "An investor with startup experience and contacts in your field joined, bringing customers"));
-            this.scoresProbabilitiesPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(15, "An investor with startup experience and contacts in your field joined, bringing customers"));
-            this.scoresProbabilitiesPerAction[Actions.Doubts] = new List<KeyValuePair<int, string>>();
-            this.scoresProbabilitiesPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(-2, "You have doubts and feel lost"));
-            this.scoresProbabilitiesPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(-1, "You have doubts and feel lost"));
-            this.scoresProbabilitiesPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(-1, "You have doubts and feel lost"));
-            this.scoresProbabilitiesPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(-1, "You have doubts and feel lost"));
-            this.scoresProbabilitiesPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(-1, "You have doubts and feel lost"));
-            this.scoresProbabilitiesPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(-1, "You have doubts and feel lost"));
-            this.scoresProbabilitiesPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(1, "You have doubts, but that motivates you to try new things"));
-            this.scoresProbabilitiesPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(1, "You have doubts, but that motivates you to try new things"));
-            this.scoresProbabilitiesPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(1, "You have doubts, but that motivates you to try new things"));
-            this.scoresProbabilitiesPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(2, "You have doubts, but that motivates you to try new things"));
-            this.scoresProbabilitiesPerAction[Actions.Sales] = new List<KeyValuePair<int, string>>();
-            this.scoresProbabilitiesPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(7, "Sold the product to a small customer (or small group)"));
-            this.scoresProbabilitiesPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(7, "Sold the product to a small customer (or small group)"));
-            this.scoresProbabilitiesPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(7, "Sold the product to a small customer (or small group)"));
-            this.scoresProbabilitiesPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(7, "Sold the product to a small customer (or small group)"));
-            this.scoresProbabilitiesPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(7, "Sold the product to a small customer (or small group)"));
-            this.scoresProbabilitiesPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(7, "Sold the product to a small customer (or small group)"));
-            this.scoresProbabilitiesPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(7, "Sold the product to a small customer (or small group)"));
-            this.scoresProbabilitiesPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(15, "Sold the product to a medium-size customer (or medium-size group)"));
-            this.scoresProbabilitiesPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(15, "Sold the product to a medium-size customer (or medium-size group)"));
-            this.scoresProbabilitiesPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(25, "Sold the product to a big customer (or big group)"));
-            this.scoresProbabilitiesPerAction[Actions.BadNews] = new List<KeyValuePair<int, string>>();
-            this.scoresProbabilitiesPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-15, "Bad news..."));
-            this.scoresProbabilitiesPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-10, "Bad news..."));
-            this.scoresProbabilitiesPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-5, "Bad news..."));
-            this.scoresProbabilitiesPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-5, "Bad news..."));
-            this.scoresProbabilitiesPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-5, "Bad news..."));
-            this.scoresProbabilitiesPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-5, "Bad news..."));
-            this.scoresProbabilitiesPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-5, "Bad news..."));
-            this.scoresProbabilitiesPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-2, "Bad news..."));
-            this.scoresProbabilitiesPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-2, "Bad news..."));
-            this.scoresProbabilitiesPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-1, "Bad news..."));
+            this.possibleScoresPerAction = new Dictionary<Actions, List<KeyValuePair<int, string>>>();
+            this.possibleScoresPerAction[Actions.None] = new List<KeyValuePair<int, string>>();
+            this.possibleScoresPerAction[Actions.None].Add(new KeyValuePair<int, string>(-1, "Feeling that things don't go as fast as expeceted..."));
+            this.possibleScoresPerAction[Actions.None].Add(new KeyValuePair<int, string>(-1, "Feeling that things don't go as fast as expeceted..."));
+            this.possibleScoresPerAction[Actions.None].Add(new KeyValuePair<int, string>(0, "Just one more day in the startup world!"));
+            this.possibleScoresPerAction[Actions.None].Add(new KeyValuePair<int, string>(0, "Just one more day in the startup world!"));
+            this.possibleScoresPerAction[Actions.None].Add(new KeyValuePair<int, string>(0, "Just one more day in the startup world!"));
+            this.possibleScoresPerAction[Actions.None].Add(new KeyValuePair<int, string>(0, "Just one more day in the startup world!"));
+            this.possibleScoresPerAction[Actions.None].Add(new KeyValuePair<int, string>(0, "Just one more day in the startup world!"));
+            this.possibleScoresPerAction[Actions.None].Add(new KeyValuePair<int, string>(0, "Just one more day in the startup world!"));
+            this.possibleScoresPerAction[Actions.None].Add(new KeyValuePair<int, string>(1, "One day closer to success!"));
+            this.possibleScoresPerAction[Actions.None].Add(new KeyValuePair<int, string>(1, "One day closer to success!"));
+            this.possibleScoresPerAction[Actions.Advisor] = new List<KeyValuePair<int, string>>();
+            this.possibleScoresPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(-15, "The 'advisor' turned out to be a liar, had no idea but took big shares"));
+            this.possibleScoresPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(-10, "The 'advisor' had no idea, gave wrong advice and company suffered"));
+            this.possibleScoresPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(-6, "You realized the 'advisor' won't help at all"));
+            this.possibleScoresPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(-6, "You realized the 'advisor' won't help at all"));
+            this.possibleScoresPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(-4, "The 'advisor' just wanted to sell his/her services"));
+            this.possibleScoresPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(-4, "The 'advisor' just wanted to sell his/her services"));
+            this.possibleScoresPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(-4, "The 'advisor' just wanted to sell his/her services"));
+            this.possibleScoresPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(2, "The 'advisor' nows about the market and may be helful"));
+            this.possibleScoresPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(5, "The 'advisor' is connected to investors in the field"));
+            this.possibleScoresPerAction[Actions.Advisor].Add(new KeyValuePair<int, string>(10, "The 'advisor' will bring important customers"));
+            this.possibleScoresPerAction[Actions.Circus] = new List<KeyValuePair<int, string>>();
+            this.possibleScoresPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(-5, "You should have been working instead; you wasted a lot of time"));
+            this.possibleScoresPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(-5, "You should have been working instead; you wasted a lot of time"));
+            this.possibleScoresPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(-5, "You should have been working instead; you wasted a lot of time"));
+            this.possibleScoresPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(-5, "You should have been working instead; you wasted a lot of time"));
+            this.possibleScoresPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(-5, "You should have been working instead; you wasted a lot of time"));
+            this.possibleScoresPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(-2, "You just wasted some time going there, not that bad"));
+            this.possibleScoresPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(-2, "You just wasted some time going there, not that bad"));
+            this.possibleScoresPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(2, "Maybe someone you met today will help you in future"));
+            this.possibleScoresPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(5, "You built useful connections (either partners or potential investors)"));
+            this.possibleScoresPerAction[Actions.Circus].Add(new KeyValuePair<int, string>(7, "You built very useful connections (someone important or well connected)"));
+            this.possibleScoresPerAction[Actions.Team] = new List<KeyValuePair<int, string>>();
+            this.possibleScoresPerAction[Actions.Team].Add(new KeyValuePair<int, string>(-15, "You picked a troublemaker as founder and gave him/her 50% of shares"));
+            this.possibleScoresPerAction[Actions.Team].Add(new KeyValuePair<int, string>(-3, "The new team member has just left college and is inexperienced"));
+            this.possibleScoresPerAction[Actions.Team].Add(new KeyValuePair<int, string>(-2, "Another person with the same profile joined"));
+            this.possibleScoresPerAction[Actions.Team].Add(new KeyValuePair<int, string>(2, "Regular worker joined the company"));
+            this.possibleScoresPerAction[Actions.Team].Add(new KeyValuePair<int, string>(2, "Regular worker joined the company"));
+            this.possibleScoresPerAction[Actions.Team].Add(new KeyValuePair<int, string>(2, "Regular worker joined the company"));
+            this.possibleScoresPerAction[Actions.Team].Add(new KeyValuePair<int, string>(5, "Talented employee joined the company"));
+            this.possibleScoresPerAction[Actions.Team].Add(new KeyValuePair<int, string>(5, "Talented employee joined the company"));
+            this.possibleScoresPerAction[Actions.Team].Add(new KeyValuePair<int, string>(7, "Talented employee with startup experience joined the company"));
+            this.possibleScoresPerAction[Actions.Team].Add(new KeyValuePair<int, string>(7, "Talented person with startup experience and connections in the field joined as co-founder"));
+            this.possibleScoresPerAction[Actions.Product] = new List<KeyValuePair<int, string>>();
+            this.possibleScoresPerAction[Actions.Product].Add(new KeyValuePair<int, string>(-3, "You invested too much (time and money) in your MVP"));
+            this.possibleScoresPerAction[Actions.Product].Add(new KeyValuePair<int, string>(3, "You released an MVP or a very small increment to test the market"));
+            this.possibleScoresPerAction[Actions.Product].Add(new KeyValuePair<int, string>(3, "You released an MVP or a very small increment to test the market"));
+            this.possibleScoresPerAction[Actions.Product].Add(new KeyValuePair<int, string>(3, "You released an MVP or a very small increment to test the market"));
+            this.possibleScoresPerAction[Actions.Product].Add(new KeyValuePair<int, string>(3, "You released an MVP or a very small increment to test the market"));
+            this.possibleScoresPerAction[Actions.Product].Add(new KeyValuePair<int, string>(3, "You released an MVP or a very small increment to test the market"));
+            this.possibleScoresPerAction[Actions.Product].Add(new KeyValuePair<int, string>(4, "You released new features after listening to customer feedback and testing the market"));
+            this.possibleScoresPerAction[Actions.Product].Add(new KeyValuePair<int, string>(4, "You released new features after listening to customer feedback and testing the market"));
+            this.possibleScoresPerAction[Actions.Product].Add(new KeyValuePair<int, string>(4, "You released new features after listening to customer feedback and testing the market"));
+            this.possibleScoresPerAction[Actions.Product].Add(new KeyValuePair<int, string>(5, "You embraced Agile methodologies: product delivery is optimized and work environment improved significantly"));
+            this.possibleScoresPerAction[Actions.Feedback] = new List<KeyValuePair<int, string>>();
+            this.possibleScoresPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(1, "You included polls in your product"));
+            this.possibleScoresPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(2, "You read customer emails and comments"));
+            this.possibleScoresPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(2, "You read customer emails and comments"));
+            this.possibleScoresPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(3, "You did one usability test with a friend"));
+            this.possibleScoresPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(3, "You did one usability test with a friend"));
+            this.possibleScoresPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(5, "You did one usability test with a potential customer"));
+            this.possibleScoresPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(5, "You did one usability test with a potential customer"));
+            this.possibleScoresPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(6, "You are tracking user events and reviewing analytics to improve"));
+            this.possibleScoresPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(6, "You are tracking user events and reviewing analytics to improve"));
+            this.possibleScoresPerAction[Actions.Feedback].Add(new KeyValuePair<int, string>(8, "You performed an A/B test to be sure which change better"));
+            this.possibleScoresPerAction[Actions.Investor] = new List<KeyValuePair<int, string>>();
+            this.possibleScoresPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(2, "You get money from FFF"));
+            this.possibleScoresPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(3, "An investor with no tech experience nor startup experience joined"));
+            this.possibleScoresPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(3, "An investor with no tech experience nor startup experience joined"));
+            this.possibleScoresPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(5, "An investor with tech experience but no startup experience joined"));
+            this.possibleScoresPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(7, "An investor with startup experience (in other fields) joined"));
+            this.possibleScoresPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(7, "An investor with startup experience (in other fields) joined"));
+            this.possibleScoresPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(10, "An investor with startup experience in your field joined"));
+            this.possibleScoresPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(10, "An investor with startup experience in your field joined"));
+            this.possibleScoresPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(15, "An investor with startup experience and contacts in your field joined, bringing customers"));
+            this.possibleScoresPerAction[Actions.Investor].Add(new KeyValuePair<int, string>(15, "An investor with startup experience and contacts in your field joined, bringing customers"));
+            this.possibleScoresPerAction[Actions.Doubts] = new List<KeyValuePair<int, string>>();
+            this.possibleScoresPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(-2, "You have doubts and feel lost"));
+            this.possibleScoresPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(-1, "You have doubts and feel lost"));
+            this.possibleScoresPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(-1, "You have doubts and feel lost"));
+            this.possibleScoresPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(-1, "You have doubts and feel lost"));
+            this.possibleScoresPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(-1, "You have doubts and feel lost"));
+            this.possibleScoresPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(-1, "You have doubts and feel lost"));
+            this.possibleScoresPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(1, "You have doubts, but that motivates you to try new things"));
+            this.possibleScoresPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(1, "You have doubts, but that motivates you to try new things"));
+            this.possibleScoresPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(1, "You have doubts, but that motivates you to try new things"));
+            this.possibleScoresPerAction[Actions.Doubts].Add(new KeyValuePair<int, string>(2, "You have doubts, but that motivates you to try new things"));
+            this.possibleScoresPerAction[Actions.Sales] = new List<KeyValuePair<int, string>>();
+            this.possibleScoresPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(7, "Sold the product to a small customer (or small group)"));
+            this.possibleScoresPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(7, "Sold the product to a small customer (or small group)"));
+            this.possibleScoresPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(7, "Sold the product to a small customer (or small group)"));
+            this.possibleScoresPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(7, "Sold the product to a small customer (or small group)"));
+            this.possibleScoresPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(7, "Sold the product to a small customer (or small group)"));
+            this.possibleScoresPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(7, "Sold the product to a small customer (or small group)"));
+            this.possibleScoresPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(7, "Sold the product to a small customer (or small group)"));
+            this.possibleScoresPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(15, "Sold the product to a medium-size customer (or medium-size group)"));
+            this.possibleScoresPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(15, "Sold the product to a medium-size customer (or medium-size group)"));
+            this.possibleScoresPerAction[Actions.Sales].Add(new KeyValuePair<int, string>(25, "Sold the product to a big customer (or big group)"));
+            this.possibleScoresPerAction[Actions.BadNews] = new List<KeyValuePair<int, string>>();
+            this.possibleScoresPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-15, "Bad news..."));
+            this.possibleScoresPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-10, "Bad news..."));
+            this.possibleScoresPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-5, "Bad news..."));
+            this.possibleScoresPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-5, "Bad news..."));
+            this.possibleScoresPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-5, "Bad news..."));
+            this.possibleScoresPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-5, "Bad news..."));
+            this.possibleScoresPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-5, "Bad news..."));
+            this.possibleScoresPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-2, "Bad news..."));
+            this.possibleScoresPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-2, "Bad news..."));
+            this.possibleScoresPerAction[Actions.BadNews].Add(new KeyValuePair<int, string>(-1, "Bad news..."));
         }
 
         private void generatePercentagesOfActionsPerQ()
         {
-            this.percentagesOfActionsPerQ = new Dictionary<Actions, int>[4];
-            this.percentagesOfActionsPerQ[0] = new Dictionary<Actions, int>();
-            this.percentagesOfActionsPerQ[0][Actions.None]     = 65;
-            this.percentagesOfActionsPerQ[0][Actions.Advisor]  = 11;
-            this.percentagesOfActionsPerQ[0][Actions.Circus]   = 8;
-            this.percentagesOfActionsPerQ[0][Actions.Team]     = 4;
-            this.percentagesOfActionsPerQ[0][Actions.Product]  = 2;
-            this.percentagesOfActionsPerQ[0][Actions.Feedback] = 2;
-            this.percentagesOfActionsPerQ[0][Actions.Investor] = 1;
-            this.percentagesOfActionsPerQ[0][Actions.Doubts] = 4;
-            this.percentagesOfActionsPerQ[0][Actions.Sales] = 1;
-            this.percentagesOfActionsPerQ[0][Actions.BadNews] = 2;
-            this.percentagesOfActionsPerQ[1] = new Dictionary<Actions, int>();
-            this.percentagesOfActionsPerQ[1][Actions.None] = 55;
-            this.percentagesOfActionsPerQ[1][Actions.Advisor] = 8;
-            this.percentagesOfActionsPerQ[1][Actions.Circus] = 13;
-            this.percentagesOfActionsPerQ[1][Actions.Team] = 4;
-            this.percentagesOfActionsPerQ[1][Actions.Product] = 6;
-            this.percentagesOfActionsPerQ[1][Actions.Feedback] = 4;
-            this.percentagesOfActionsPerQ[1][Actions.Investor] = 1;
-            this.percentagesOfActionsPerQ[1][Actions.Doubts] = 3;
-            this.percentagesOfActionsPerQ[1][Actions.Sales] = 1;
-            this.percentagesOfActionsPerQ[1][Actions.BadNews] = 5;
-            this.percentagesOfActionsPerQ[2] = new Dictionary<Actions, int>();
-            this.percentagesOfActionsPerQ[2][Actions.None] = 55;
-            this.percentagesOfActionsPerQ[2][Actions.Advisor] = 6;
-            this.percentagesOfActionsPerQ[2][Actions.Circus] = 6;
-            this.percentagesOfActionsPerQ[2][Actions.Team] = 4;
-            this.percentagesOfActionsPerQ[2][Actions.Product] = 5;
-            this.percentagesOfActionsPerQ[2][Actions.Feedback] = 7;
-            this.percentagesOfActionsPerQ[2][Actions.Investor] = 3;
-            this.percentagesOfActionsPerQ[2][Actions.Doubts] = 2;
-            this.percentagesOfActionsPerQ[2][Actions.Sales] = 4;
-            this.percentagesOfActionsPerQ[2][Actions.BadNews] = 8;
-            this.percentagesOfActionsPerQ[3] = new Dictionary<Actions, int>();
-            this.percentagesOfActionsPerQ[3][Actions.None] = 70;
-            this.percentagesOfActionsPerQ[3][Actions.Advisor] = 2;
-            this.percentagesOfActionsPerQ[3][Actions.Circus] = 4;
-            this.percentagesOfActionsPerQ[3][Actions.Team] = 3;
-            this.percentagesOfActionsPerQ[3][Actions.Product] = 3;
-            this.percentagesOfActionsPerQ[3][Actions.Feedback] = 5;
-            this.percentagesOfActionsPerQ[3][Actions.Investor] = 3;
-            this.percentagesOfActionsPerQ[3][Actions.Doubts] = 0;
-            this.percentagesOfActionsPerQ[3][Actions.Sales] = 7;
-            this.percentagesOfActionsPerQ[3][Actions.BadNews] = 3;
+            this.actionProbabilityPerQ = new Dictionary<Actions, int>[4];
+            this.actionProbabilityPerQ[0] = new Dictionary<Actions, int>();
+            this.actionProbabilityPerQ[0][Actions.None]     = 65;
+            this.actionProbabilityPerQ[0][Actions.Advisor]  = 11;
+            this.actionProbabilityPerQ[0][Actions.Circus]   = 8;
+            this.actionProbabilityPerQ[0][Actions.Team]     = 4;
+            this.actionProbabilityPerQ[0][Actions.Product]  = 2;
+            this.actionProbabilityPerQ[0][Actions.Feedback] = 2;
+            this.actionProbabilityPerQ[0][Actions.Investor] = 1;
+            this.actionProbabilityPerQ[0][Actions.Doubts] = 4;
+            this.actionProbabilityPerQ[0][Actions.Sales] = 1;
+            this.actionProbabilityPerQ[0][Actions.BadNews] = 2;
+            this.actionProbabilityPerQ[1] = new Dictionary<Actions, int>();
+            this.actionProbabilityPerQ[1][Actions.None] = 55;
+            this.actionProbabilityPerQ[1][Actions.Advisor] = 8;
+            this.actionProbabilityPerQ[1][Actions.Circus] = 13;
+            this.actionProbabilityPerQ[1][Actions.Team] = 4;
+            this.actionProbabilityPerQ[1][Actions.Product] = 6;
+            this.actionProbabilityPerQ[1][Actions.Feedback] = 4;
+            this.actionProbabilityPerQ[1][Actions.Investor] = 1;
+            this.actionProbabilityPerQ[1][Actions.Doubts] = 3;
+            this.actionProbabilityPerQ[1][Actions.Sales] = 1;
+            this.actionProbabilityPerQ[1][Actions.BadNews] = 5;
+            this.actionProbabilityPerQ[2] = new Dictionary<Actions, int>();
+            this.actionProbabilityPerQ[2][Actions.None] = 55;
+            this.actionProbabilityPerQ[2][Actions.Advisor] = 6;
+            this.actionProbabilityPerQ[2][Actions.Circus] = 6;
+            this.actionProbabilityPerQ[2][Actions.Team] = 4;
+            this.actionProbabilityPerQ[2][Actions.Product] = 5;
+            this.actionProbabilityPerQ[2][Actions.Feedback] = 7;
+            this.actionProbabilityPerQ[2][Actions.Investor] = 3;
+            this.actionProbabilityPerQ[2][Actions.Doubts] = 2;
+            this.actionProbabilityPerQ[2][Actions.Sales] = 4;
+            this.actionProbabilityPerQ[2][Actions.BadNews] = 8;
+            this.actionProbabilityPerQ[3] = new Dictionary<Actions, int>();
+            this.actionProbabilityPerQ[3][Actions.None] = 70;
+            this.actionProbabilityPerQ[3][Actions.Advisor] = 2;
+            this.actionProbabilityPerQ[3][Actions.Circus] = 4;
+            this.actionProbabilityPerQ[3][Actions.Team] = 3;
+            this.actionProbabilityPerQ[3][Actions.Product] = 3;
+            this.actionProbabilityPerQ[3][Actions.Feedback] = 5;
+            this.actionProbabilityPerQ[3][Actions.Investor] = 3;
+            this.actionProbabilityPerQ[3][Actions.Doubts] = 0;
+            this.actionProbabilityPerQ[3][Actions.Sales] = 7;
+            this.actionProbabilityPerQ[3][Actions.BadNews] = 3;
         }
 
         private Actions generateCellContent(int i, int j)
@@ -472,7 +472,7 @@ namespace GeneticStartupsWindows
             Actions currentAction = Actions.None;
             while (currentRange < randomNumber)
             {
-                currentRange += this.percentagesOfActionsPerQ[quarter][(Actions)i];
+                currentRange += this.actionProbabilityPerQ[quarter][(Actions)i];
                 currentAction = (Actions)i;
                 i++;
             }

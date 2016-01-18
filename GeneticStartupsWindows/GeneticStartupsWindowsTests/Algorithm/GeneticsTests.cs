@@ -18,26 +18,26 @@ namespace GeneticStartupsWindows.Tests
             int totalPercentages;
             for (int i=0; i< 4; i++)
             {
-                totalPercentages = genetics.percentagesOfActionsPerQ[i][Genetics.Actions.None] +
-                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Advisor] +
-                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Circus] +
-                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Team] +
-                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Product] +
-                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Feedback] +
-                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Investor] +
-                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Doubts] +
-                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.Sales] +
-                genetics.percentagesOfActionsPerQ[i][Genetics.Actions.BadNews];
+                totalPercentages = genetics.actionProbabilityPerQ[i][Genetics.Actions.None] +
+                genetics.actionProbabilityPerQ[i][Genetics.Actions.Advisor] +
+                genetics.actionProbabilityPerQ[i][Genetics.Actions.Circus] +
+                genetics.actionProbabilityPerQ[i][Genetics.Actions.Team] +
+                genetics.actionProbabilityPerQ[i][Genetics.Actions.Product] +
+                genetics.actionProbabilityPerQ[i][Genetics.Actions.Feedback] +
+                genetics.actionProbabilityPerQ[i][Genetics.Actions.Investor] +
+                genetics.actionProbabilityPerQ[i][Genetics.Actions.Doubts] +
+                genetics.actionProbabilityPerQ[i][Genetics.Actions.Sales] +
+                genetics.actionProbabilityPerQ[i][Genetics.Actions.BadNews];
                 Assert.AreEqual(100, totalPercentages);
             }
         }
 
         [TestMethod()]
-        public void generateScoreProbabilitiesPerActionTest()
+        public void possibleScoresAndExplanationsPerActionTest()
         {
             Genetics genetics = new Genetics(20, 20, 19);
-            Assert.AreEqual(-1, genetics.scoresProbabilitiesPerAction[Genetics.Actions.None][0].Key);
-            Assert.AreEqual("Feeling that things don't go as fast as expeceted...", genetics.scoresProbabilitiesPerAction[Genetics.Actions.None][0].Value);
+            Assert.AreEqual(-1, genetics.possibleScoresPerAction[Genetics.Actions.None][0].Key);
+            Assert.AreEqual("Feeling that things don't go as fast as expeceted...", genetics.possibleScoresPerAction[Genetics.Actions.None][0].Value);
         }
 
         [TestMethod()]
@@ -64,8 +64,8 @@ namespace GeneticStartupsWindows.Tests
             int numberOfCells1Q = 20 * 20 / 4;
             percentageEmtyCells = (totalEmtyCells * 100) / numberOfCells1Q;
             percentageAdvisorCells = (totalAdvisorCells * 100) / numberOfCells1Q;
-            int numerOfEmptyCells1Q = numberOfCells1Q * genetics.percentagesOfActionsPerQ[0][Genetics.Actions.None] / 100;
-            int numerOfAdvisorCells1Q = numberOfCells1Q * genetics.percentagesOfActionsPerQ[0][Genetics.Actions.Advisor] / 100;
+            int numerOfEmptyCells1Q = numberOfCells1Q * genetics.actionProbabilityPerQ[0][Genetics.Actions.None] / 100;
+            int numerOfAdvisorCells1Q = numberOfCells1Q * genetics.actionProbabilityPerQ[0][Genetics.Actions.Advisor] / 100;
             Assert.AreNotEqual(0, numerOfEmptyCells1Q);
             Assert.AreNotEqual(0, numerOfAdvisorCells1Q);
             Assert.AreNotEqual(numberOfCells1Q, numerOfEmptyCells1Q);
@@ -73,7 +73,7 @@ namespace GeneticStartupsWindows.Tests
         }
 
         [TestMethod()]
-        public void generatePopulationTest()
+        public void generatePopulationBinaryChromosomesTest()
         {
             Genetics genetics = new Genetics(20, 20, 19);
             genetics.generatePopulation(10);
@@ -90,11 +90,11 @@ namespace GeneticStartupsWindows.Tests
             genetics.createBoard();
             genetics.generatePopulation(10);
             genetics.generateScores();
-            Assert.AreEqual(10, genetics.populationIndividualScores.Count);
+            Assert.AreEqual(10, genetics.individualsSortedByScore.Count);
         }
 
         [TestMethod()]
-        public void generateScoresTest()
+        public void generateScoresAndSortIndividualsTest()
         {
             Genetics genetics = new Genetics(3, 3, 2);
             genetics.matrix = new Genetics.Actions[3, 3];
@@ -108,38 +108,13 @@ namespace GeneticStartupsWindows.Tests
             genetics.matrix[2, 1] = Genetics.Actions.None;
             genetics.matrix[2, 2] = Genetics.Actions.BadNews;
             genetics.generatePopulation(3);
-            //genetics.population = new int[3][];
             genetics.population[0] = new int[] { 1, 0, 0, 1, 0, 1 }; // Starting 0,2; down; down
             genetics.population[1] = new int[] { 0, 1, 0, 0, 0, 1 }; // Starting 0,1; right; down
             genetics.population[2] = new int[] { 1, 0, 0, 0, 0, 0 }; // Starting 0,2; right; right
             genetics.generateScores();
-            // TODO: THIS TEST IS FAILING!! ******************************************
-            //Order of population elements based on scores (1st mus be element 1, 2nd, element 0 and 3rd element 2)
-            Assert.AreEqual(1, genetics.populationIndividualScores[0].Key);
-            Assert.AreEqual(0, genetics.populationIndividualScores[1].Key);
-            Assert.AreEqual(2, genetics.populationIndividualScores[2].Key);
-            //Values
-
-        }
-
-        [TestMethod()]
-        public void newGenerationTest()
-        {
-            Genetics genetics = new Genetics(3, 3, 2);
-            genetics.matrix = new Genetics.Actions[3, 3];
-            genetics.matrix[0, 0] = Genetics.Actions.None;
-            genetics.matrix[0, 1] = Genetics.Actions.Advisor;
-            genetics.matrix[0, 2] = Genetics.Actions.Team;
-            genetics.matrix[1, 0] = Genetics.Actions.Circus;
-            genetics.matrix[1, 1] = Genetics.Actions.Investor;
-            genetics.matrix[1, 2] = Genetics.Actions.None;
-            genetics.matrix[2, 0] = Genetics.Actions.Product;
-            genetics.matrix[2, 1] = Genetics.Actions.Sales;
-            genetics.matrix[2, 2] = Genetics.Actions.BadNews;
-            genetics.population = new int[3][];
-            genetics.population[0] = new int[] { 0, 0, 0, 0, 0, 0 }; // Startin 0,0; right; right
-            genetics.population[1] = new int[] { 1, 0, 1, 1, 0, 0 }; // Startin 0,2; up; right
-            genetics.population[2] = new int[] { 1, 1, 0, 1, 1, 0 }; // Startin 0,1; down; left (4 -> 1 starting and left of 0 delivers -10
+            Assert.AreEqual(1, genetics.individualsSortedByScore[0].Key);
+            Assert.AreEqual(0, genetics.individualsSortedByScore[1].Key);
+            Assert.AreEqual(2, genetics.individualsSortedByScore[2].Key);
         }
 
         [TestMethod()]
