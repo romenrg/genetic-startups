@@ -12,67 +12,6 @@ namespace GeneticStartupsWindows.Tests
     public class GeneticsTests
     {
         [TestMethod()]
-        public void generatePercentagesTest()
-        {
-            Genetics genetics = new Genetics(20, 20, 19);
-            int totalPercentages;
-            for (int i=0; i< 4; i++)
-            {
-                totalPercentages = genetics.actionProbabilityPerQ[i][Genetics.Actions.None] +
-                genetics.actionProbabilityPerQ[i][Genetics.Actions.Advisor] +
-                genetics.actionProbabilityPerQ[i][Genetics.Actions.Circus] +
-                genetics.actionProbabilityPerQ[i][Genetics.Actions.Team] +
-                genetics.actionProbabilityPerQ[i][Genetics.Actions.Product] +
-                genetics.actionProbabilityPerQ[i][Genetics.Actions.Feedback] +
-                genetics.actionProbabilityPerQ[i][Genetics.Actions.Investor] +
-                genetics.actionProbabilityPerQ[i][Genetics.Actions.Doubts] +
-                genetics.actionProbabilityPerQ[i][Genetics.Actions.Sales] +
-                genetics.actionProbabilityPerQ[i][Genetics.Actions.BadNews];
-                Assert.AreEqual(100, totalPercentages);
-            }
-        }
-
-        [TestMethod()]
-        public void possibleScoresAndExplanationsPerActionTest()
-        {
-            Genetics genetics = new Genetics(20, 20, 19);
-            Assert.AreEqual(-1, genetics.possibleScoresPerAction[Genetics.Actions.None][0].Key);
-            Assert.AreEqual("Feeling that things don't go as fast as expeceted...", genetics.possibleScoresPerAction[Genetics.Actions.None][0].Value);
-        }
-
-        [TestMethod()]
-        public void createBoardFirstQuarterDistributionTest()
-        {
-            Genetics genetics = new Genetics(20, 20, 19);
-            genetics.createBoard();
-            int totalEmtyCells = 0, totalAdvisorCells = 0;
-            int percentageEmtyCells = 0, percentageAdvisorCells = 0;
-            for (int i=0; i < genetics.matrix.GetLength(0) / 4; i++)
-            {
-                for (int j = 0; j < genetics.matrix.GetLength(0); j++)
-                {
-                    if (genetics.matrix[i, j] == Genetics.Actions.None)
-                    {
-                        totalEmtyCells++;
-                    }
-                    else if (genetics.matrix[i, j] == Genetics.Actions.Advisor)
-                    {
-                        totalAdvisorCells++;
-                    }
-                }
-            }
-            int numberOfCells1Q = 20 * 20 / 4;
-            percentageEmtyCells = (totalEmtyCells * 100) / numberOfCells1Q;
-            percentageAdvisorCells = (totalAdvisorCells * 100) / numberOfCells1Q;
-            int numerOfEmptyCells1Q = numberOfCells1Q * genetics.actionProbabilityPerQ[0][Genetics.Actions.None] / 100;
-            int numerOfAdvisorCells1Q = numberOfCells1Q * genetics.actionProbabilityPerQ[0][Genetics.Actions.Advisor] / 100;
-            Assert.AreNotEqual(0, numerOfEmptyCells1Q);
-            Assert.AreNotEqual(0, numerOfAdvisorCells1Q);
-            Assert.AreNotEqual(numberOfCells1Q, numerOfEmptyCells1Q);
-            Assert.AreNotEqual(numberOfCells1Q, numerOfAdvisorCells1Q);
-        }
-
-        [TestMethod()]
         public void generatePopulationBinaryChromosomesTest()
         {
             Genetics genetics = new Genetics(20, 20, 19);
@@ -97,16 +36,16 @@ namespace GeneticStartupsWindows.Tests
         public void generateScoresAndSortIndividualsTest()
         {
             Genetics genetics = new Genetics(3, 3, 2);
-            genetics.matrix = new Genetics.Actions[3, 3];
-            genetics.matrix[0, 0] = Genetics.Actions.Circus;
-            genetics.matrix[0, 1] = Genetics.Actions.Team;
-            genetics.matrix[0, 2] = Genetics.Actions.Advisor;
-            genetics.matrix[1, 0] = Genetics.Actions.Sales;
-            genetics.matrix[1, 1] = Genetics.Actions.Investor;
-            genetics.matrix[1, 2] = Genetics.Actions.Circus;
-            genetics.matrix[2, 0] = Genetics.Actions.None;
-            genetics.matrix[2, 1] = Genetics.Actions.None;
-            genetics.matrix[2, 2] = Genetics.Actions.BadNews;
+            genetics.mapHelpers.matrix = new Genetics.Actions[3, 3];
+            genetics.mapHelpers.matrix[0, 0] = Genetics.Actions.Circus;
+            genetics.mapHelpers.matrix[0, 1] = Genetics.Actions.Team;
+            genetics.mapHelpers.matrix[0, 2] = Genetics.Actions.Advisor;
+            genetics.mapHelpers.matrix[1, 0] = Genetics.Actions.Sales;
+            genetics.mapHelpers.matrix[1, 1] = Genetics.Actions.Investor;
+            genetics.mapHelpers.matrix[1, 2] = Genetics.Actions.Circus;
+            genetics.mapHelpers.matrix[2, 0] = Genetics.Actions.None;
+            genetics.mapHelpers.matrix[2, 1] = Genetics.Actions.None;
+            genetics.mapHelpers.matrix[2, 2] = Genetics.Actions.BadNews;
             genetics.generatePopulation(3);
             genetics.population[0] = new int[] { 1, 0, 0, 1, 0, 1 }; // Starting 0,2; down; down
             genetics.population[1] = new int[] { 0, 1, 0, 0, 0, 1 }; // Starting 0,1; right; down
@@ -115,16 +54,6 @@ namespace GeneticStartupsWindows.Tests
             Assert.AreEqual(1, genetics.individualsSortedByScore[0].Key);
             Assert.AreEqual(0, genetics.individualsSortedByScore[1].Key);
             Assert.AreEqual(2, genetics.individualsSortedByScore[2].Key);
-        }
-
-        [TestMethod()]
-        public void calculateSquareValueTest()
-        {
-            Genetics genetics = new Genetics(20, 20, 19);
-            genetics.matrix = new Genetics.Actions[1, 1];
-            genetics.matrix[0, 0] = Genetics.Actions.Advisor;
-            int squareValue = genetics.calculateSquareValue(0,0);
-            Assert.AreEqual(-32, squareValue);
         }
 
         [TestMethod()]
@@ -161,16 +90,6 @@ namespace GeneticStartupsWindows.Tests
             Assert.AreEqual(expectedPath[0], individualPath[0]);
             Assert.AreEqual(expectedPath[1], individualPath[1]);
             Assert.AreEqual(expectedPath[4], individualPath[4]);
-        }
-
-        [TestMethod()]
-        public void getProperIconForPosTest()
-        {
-            Genetics genetics = new Genetics(20, 20, 19);
-            genetics.matrix = new Genetics.Actions[1, 1];
-            genetics.matrix[0, 0] = Genetics.Actions.None;
-            System.Drawing.Image img = genetics.getIconForPos(0, 0);
-            Assert.AreEqual(null, img);
         }
     }
 }
