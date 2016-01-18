@@ -179,7 +179,6 @@ namespace GeneticStartupsWindows
             this.ClientSize = this.uiAritmetics.calculateClientSize(this.tableLayoutPanel1.Size, this.menuStrip1.Size, this.cellHeight, this.cellWidth, this.button1.Size, this.button2.Size);
             this.tableLayoutPanel1.Location = this.uiAritmetics.calculateTableLocationCenteredInContainer(this.tableLayoutPanel1.Size, this.ClientSize);
             this.label1.Location = new System.Drawing.Point(this.ClientSize.Width / 2 - this.label1.Size.Width / 2, this.menuStrip1.Size.Height + this.cellHeight * 2 / 5);
-            //this.label1.Location = new System.Drawing.Point(this.ClientSize.Width / 5 * 3, this.tableLayoutPanel1.Size.Height + this.menuStrip1.Size.Height + this.cellHeight * 5 / 3);
             this.button1.Location = new System.Drawing.Point(this.ClientSize.Width / 5, this.tableLayoutPanel1.Size.Height + this.menuStrip1.Size.Height + this.cellHeight * 5 / 3);
             this.button2.Location = new System.Drawing.Point(this.ClientSize.Width / 5 * 4 - this.button2.Size.Width, this.tableLayoutPanel1.Size.Height + this.menuStrip1.Size.Height + this.cellHeight * 5 / 3);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -201,13 +200,8 @@ namespace GeneticStartupsWindows
             {
                 for (int j = 0; j < this.tableLayoutPanel1.RowCount; j++)
                 {
-                    //this.tableCells[i, j].Image = GeneticStartupsWindows.Properties.Resources.entrepreneur_starting;
                     this.tableCells[i, j].Image = this.genetics.getIconForPos(i, j);
-                    //this.tableCells[i, j].Padding = new Padding(this.cellPadding);
-                    //this.tableCells[i, j].SizeMode = PictureBoxSizeMode.Zoom;
                     this.tableCells[i, j].SizeMode = PictureBoxSizeMode.StretchImage;
-                    //this.tableCells[i, j].Size = new System.Drawing.Size(this.cellWidth - this.cellPadding, this.cellHeight - this.cellPadding);
-                    //this.tableCells[i, j].SizeMode = PictureBoxSizeMode.CenterImage;
                 }
             }
             Cursor.Current = Cursors.Default;
@@ -267,6 +261,7 @@ namespace GeneticStartupsWindows
             }
         }
 
+
         // -----------------------------
         //  Event Listeners
         // -----------------------------
@@ -279,19 +274,14 @@ namespace GeneticStartupsWindows
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            // Generate population
             this.genetics.generatePopulation(25);
             this.genetics.generateScores();
             this.label1.Text = "Generation: 1" + " / " + Genetics.NUM_GENERATIONS + ". Best score (displayed): " + genetics.individualsSortedByScore[0].Value;
             for (int i = 1; i < Genetics.NUM_GENERATIONS; i++)
             {
-                // Show Best Candidate both path and face+messages (right side)
                 await this.showBestCandidateOfGeneration();
                 this.cleanMap();
                 await Task.Delay(750);
-                //if (i < Genetics.NUM_GENERATIONS - 1) {
-                    // this.genetics.newGeneration();
-                //}
                 this.genetics.newGeneration();
                 this.genetics.generateScores();
                 this.label1.Text = "Generation: " + (i + 1) + " / " + Genetics.NUM_GENERATIONS + ". Best score (displayed): " + genetics.individualsSortedByScore[0].Value;

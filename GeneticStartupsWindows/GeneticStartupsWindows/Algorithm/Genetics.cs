@@ -109,12 +109,6 @@ namespace GeneticStartupsWindows
             {
                 individualScore += this.mapHelpers.calculateSquareValue(individualCellsPath[i].Item1, individualCellsPath[i].Item2);
             }
-            // Now we should check the squares the individual is visiting and
-            // must have a data structure with the possible values of each action
-            // E.G. advisor is a random number between -15 and 5
-            // Finish is -50 (failure) or 50 (success)
-            // To sort multiple winning solutions we add the number of remaining squares to the score
-            // E.G. If winning in the 5th square out of 20, the score will be 50 + 15 = 65;
             return individualScore;
         }
 
@@ -122,8 +116,6 @@ namespace GeneticStartupsWindows
             int[][] selectedIndividuals = new int[elementsToSelect][];
             for (int i=0; i< elementsToSelect; i++)
             {
-                //TODO: Array must be copied!!! This is a reference
-                //selectedIndividuals[i] = this.population[this.populationIndividualScores[i].Key];
                 selectedIndividuals[i] = (int[])(this.population[this.individualsSortedByScore[i].Key]).Clone();
             }
             return selectedIndividuals;
@@ -135,8 +127,6 @@ namespace GeneticStartupsWindows
             {
                 int randomIndexOfFirstIndividualToMutate = this.generateRandomNum.Next(this.population.Length);
                 int randomIndexOfSecondIndividualToMutate = this.generateRandomNum.Next(this.population.Length);
-                //int[] firstElementToCross = this.population[randomIndexOfFirstIndividualToMutate];
-                //int[] secondElementToCross = this.population[randomIndexOfSecondIndividualToMutate];
                 int[] firstElementToCross = (int[])this.population[randomIndexOfFirstIndividualToMutate].Clone();
                 int[] secondElementToCross = (int[])this.population[randomIndexOfSecondIndividualToMutate].Clone();
                 int[] newFirstHalf = firstElementToCross.Skip(0).Take(this.individualLength / 2).ToArray();
@@ -158,7 +148,6 @@ namespace GeneticStartupsWindows
             for (int i = 0; i < elementsToMutate; i++)
             {
                 int randomIndexOfIndividualToMutate = this.generateRandomNum.Next(this.population.Length);
-                //mutatedIndividuals[i] = this.population[randomIndexOfIndividualToMutate];
                 mutatedIndividuals[i] = (int[])this.population[randomIndexOfIndividualToMutate].Clone();
                 int randomElementOfndividual = this.generateRandomNum.Next(mutatedIndividuals[i].Length - 1);
                 if (mutatedIndividuals[i][randomElementOfndividual] == 1)
@@ -171,8 +160,6 @@ namespace GeneticStartupsWindows
 
         private Tuple<int, int> calculateCellFromPreviousAndMovement(Tuple<int, int> previousCell, int[] movement)
         {
-            // TODO: Something should be done if movements lead to a non-existing square...
-            // Probably in the fitness function it should be considered like -10 (going out of the map)
             Tuple<int, int> newSquare = new Tuple<int, int>(-1, -1);
             if (this.mapHelpers.movingRight(movement))
             {
@@ -213,9 +200,9 @@ namespace GeneticStartupsWindows
             return decimalValue;
         }
 
-        // -----------------------------
-        //  Map proxies
-        // -----------------------------
+        // ----------------------------------
+        //  Proxies for Map Helper functions
+        // ----------------------------------
         public void createBoard()
         {
             this.mapHelpers.createBoard();
