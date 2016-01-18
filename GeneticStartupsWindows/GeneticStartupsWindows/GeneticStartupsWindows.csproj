@@ -64,50 +64,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UI\Form3.cs">
+    <Compile Include="UI\Forms\TypesOfSquaresForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <Compile Include="UI\Forms\TypesOfSquaresForm.Designer.cs">
+      <DependentUpon>TypesOfSquaresForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\TheAlgorithmForm.cs">
+    <Compile Include="UI\Forms\TheAlgorithmForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\TheAlgorithmForm.Designer.cs">
+    <Compile Include="UI\Forms\TheAlgorithmForm.Designer.cs">
       <DependentUpon>TheAlgorithmForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Algorithm\Genetics.cs" />
-    <Compile Include="UI\LicenseForm.cs">
+    <Compile Include="UI\Forms\LicenseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\LicenseForm.Designer.cs">
+    <Compile Include="UI\Forms\LicenseForm.Designer.cs">
       <DependentUpon>LicenseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Algorithm\UIAritmetics.cs" />
-    <Compile Include="UI\Form1.cs">
+    <Compile Include="UI\Helpers\UIAritmetics.cs" />
+    <Compile Include="UI\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="UI\Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Form2.cs">
+    <Compile Include="UI\Forms\MapSizeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <Compile Include="UI\Forms\MapSizeForm.Designer.cs">
+      <DependentUpon>MapSizeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="UI\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Form3.resx">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Forms\TypesOfSquaresForm.resx">
+      <DependentUpon>TypesOfSquaresForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Forms\MapSizeForm.resx">
+      <DependentUpon>MapSizeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\LicenseForm.resx">
+    <EmbeddedResource Include="UI\Forms\LicenseForm.resx">
       <DependentUpon>LicenseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -120,7 +120,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UI\TheAlgorithmForm.resx">
+    <EmbeddedResource Include="UI\Forms\TheAlgorithmForm.resx">
       <DependentUpon>TheAlgorithmForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">

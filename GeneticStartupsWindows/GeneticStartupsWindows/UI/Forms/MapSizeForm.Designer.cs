@@ -1,6 +1,6 @@
 ﻿namespace GeneticStartupsWindows
 {
-    partial class Form2
+    partial class MapSizeform
     {
         /// <summary>
         /// Required designer variable.

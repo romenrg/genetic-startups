@@ -53,10 +53,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Form1Tests.cs" />
-    <Compile Include="GeneticsTests.cs" />
+    <Compile Include="Algorithm\GeneticsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UIAritmeticsTests.cs" />
+    <Compile Include="UI\Helpers\UIAritmeticsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GeneticStartupsWindows\GeneticStartupsWindows.csproj">

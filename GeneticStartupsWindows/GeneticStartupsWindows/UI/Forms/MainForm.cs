@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GeneticStartupsWindows
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private Genetics genetics;
         private int numCols = 24;
@@ -39,7 +39,7 @@ namespace GeneticStartupsWindows
         //  Public methods
         // -----------------------------
 
-        public Form1()
+        public MainForm()
         {
             //InitializeComponent();
             // Initialize helpers
@@ -301,7 +301,7 @@ namespace GeneticStartupsWindows
 
         private void mapSizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2();
+            MapSizeform form2 = new MapSizeform();
             var result = form2.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -328,7 +328,7 @@ namespace GeneticStartupsWindows
 
         private void squaresToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form3 form3 = new Form3();
+            TypesOfSquaresForm form3 = new TypesOfSquaresForm();
             var result = form3.ShowDialog();
             if (result == DialogResult.OK)
             {

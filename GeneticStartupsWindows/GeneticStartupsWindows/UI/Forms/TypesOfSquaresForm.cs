@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace GeneticStartupsWindows
 {
-    public partial class Form3 : Form
+    public partial class TypesOfSquaresForm : Form
     {
-        public Form3()
+        public TypesOfSquaresForm()
         {
             InitializeComponent();
         }

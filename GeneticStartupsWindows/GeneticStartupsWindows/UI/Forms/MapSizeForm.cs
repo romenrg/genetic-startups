@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace GeneticStartupsWindows
 {
-    public partial class Form2 : Form
+    public partial class MapSizeform : Form
     {
-        public Form2()
+        public MapSizeform()
         {
             InitializeComponent();
         }
