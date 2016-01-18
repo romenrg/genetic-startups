@@ -64,50 +64,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form3.cs">
+    <Compile Include="UI\Form3.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form3.Designer.cs">
+    <Compile Include="UI\Form3.Designer.cs">
       <DependentUpon>Form3.cs</DependentUpon>
     </Compile>
-    <Compile Include="TheAlgorithmForm.cs">
+    <Compile Include="UI\TheAlgorithmForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TheAlgorithmForm.Designer.cs">
+    <Compile Include="UI\TheAlgorithmForm.Designer.cs">
       <DependentUpon>TheAlgorithmForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Genetics.cs" />
-    <Compile Include="LicenseForm.cs">
+    <Compile Include="Algorithm\Genetics.cs" />
+    <Compile Include="UI\LicenseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LicenseForm.Designer.cs">
+    <Compile Include="UI\LicenseForm.Designer.cs">
       <DependentUpon>LicenseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UIAritmetics.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Algorithm\UIAritmetics.cs" />
+    <Compile Include="UI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="UI\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form2.cs">
+    <Compile Include="UI\Form2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.Designer.cs">
+    <Compile Include="UI\Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="UI\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form3.resx">
+    <EmbeddedResource Include="UI\Form3.resx">
       <DependentUpon>Form3.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
+    <EmbeddedResource Include="UI\Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LicenseForm.resx">
+    <EmbeddedResource Include="UI\LicenseForm.resx">
       <DependentUpon>LicenseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -120,7 +120,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="TheAlgorithmForm.resx">
+    <EmbeddedResource Include="UI\TheAlgorithmForm.resx">
       <DependentUpon>TheAlgorithmForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -176,6 +176,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
