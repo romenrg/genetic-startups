@@ -163,13 +163,14 @@ namespace GeneticStartupsWindows.Tests
             Assert.AreEqual(expectedPath[4], individualPath[4]);
         }
 
-        //[TestMethod()]
-        //public void getIconForPosTest()
-        //{
-        //    Genetics genetics = new Genetics(20, 20, 19);
-        //    genetics.matrix[0, 0] = Genetics.Actions.Advisor;
-        //    System.Drawing.Image img = genetics.getIconForPos(0, 0);
-        //    Assert.AreEqual(GeneticStartupsWindows.Properties.Resources.startups_circus, img);
-        //}
+        [TestMethod()]
+        public void getProperIconForPosTest()
+        {
+            Genetics genetics = new Genetics(20, 20, 19);
+            genetics.matrix = new Genetics.Actions[1, 1];
+            genetics.matrix[0, 0] = Genetics.Actions.None;
+            System.Drawing.Image img = genetics.getIconForPos(0, 0);
+            Assert.AreEqual(null, img);
+        }
     }
 }
