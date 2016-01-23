@@ -1,5 +1,5 @@
 # Genetic Startups
-> An application, based on Genetic Algorithms, representing possible lives of startups. The algorithm improves startup paths over generations, to achieve the most successful outcome possible in the given map.
+> An application, based on Genetic Algorithms, representing possible lives of startups. The algorithm improves startup choices over generations, to achieve the most successful outcome possible; in a map where investors, product launches, team members, sad news and sales, among other options, appear.
 
 ## Introduction: Genetic Algorithms
 
@@ -32,7 +32,7 @@ Every new generation is calculated by performing 3 operations:
 
 ### Implementations
 There will be implementations of this application using 3 different combinations of technologies / framewoks:
-- *Native Windows app:* C# + .Net + Windows Forms
+- *Native Windows app:* C# + .Net + Windows Forms ([repository](https://github.com/romenrg/genetic-startups-desktop-csharp-dotnet) | [installer](https://github.com/romenrg/genetic-startups-desktop-csharp-dotnet/releases))
 - *NodeJS + REST API + ReactJS*
 - *Java / Spring + REST API + AngularJS*
 
