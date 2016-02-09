@@ -1,6 +1,8 @@
 # Genetic Startups
 > An application, based on Genetic Algorithms, representing possible lives of startups. The algorithm improves startup choices over generations, to achieve the most successful outcome possible; in a map where investors, product launches, team members, sad news and sales, among other options, appear.
 
+![Best Candidate in a Map](https://s3-eu-west-1.amazonaws.com/genetic-startups/info/map-best-candidate.png "Showing the best candidate of 15 generations in the given map")
+
 ## Introduction: Genetic Algorithms
 
 In the field of artificial intelligence, a genetic algorithm (GA) is a search heuristic that mimics the process of natural selection. This heuristic is routinely used to generate useful solutions to optimization and search problems.
@@ -11,8 +13,11 @@ Genetic algorithms belong to the larger class of evolutionary algorithms (EA), w
 
 Startups are surrounded with huge uncertainty and have very limited resources and time. Besides, the life of a startup is full of obstacles and tough choices. As founders, we must be very careful when choosing one path or another.
 
-In this application, we generate random "maps" that represent the life of a startup (by showing some choices that startup founders usually encounter).
-Since time and resources are limited, finding the optimal path is key to success. Pursuing that goal, we have developed a genetic algorithm that tries to pick the best possible outcome for the startup, learning with each new generation.
+In this application, we generate random "maps" that represent the life of a startup (by showing some choices that startup founders usually encounter). Since time and resources are limited, finding the optimal path is key to success. Pursuing that goal, we have developed a genetic algorithm that tries to pick the best possible outcome for the startup, learning with each new generation.
+
+Each cell in the map can have any of the elements displayed in the following image. For every choice, we have created a score based on possible values (some negative and some positive) that each choice can give us.
+
+![Types of Squares](https://s3-eu-west-1.amazonaws.com/genetic-startups/info/types-of-squares.png "Description of all possible squares in the map")
 
 ### Population: chromosomes (start cell & movements)
 
