@@ -1,0 +1,3 @@
+[submodule "genetic-startups-web"]
+	path = genetic-startups-web
+	url = https://github.com/romenrg/genetic-startups-web.git
