@@ -1,7 +1,7 @@
 # Genetic Startups
 > Applications, based on Genetic Algorithms, representing possible lives of startups. The algorithm improves startup choices over generations, to achieve the most successful outcome possible; in a map where investors, product launches, team members, sad news and sales, among other options, appear.
 
-![Best Candidate in a Map](https://s3-eu-west-1.amazonaws.com/genetic-startups/info/map-best-candidate.png "Showing the best candidate of 15 generations in the given map")
+![Showing a startup story in the web app: geneticstartups.com](https://s3-eu-west-1.amazonaws.com/genetic-startups/info/gs-web-ran-algorithm-story.png "Showing story option of best candidate in web app")
 
 ## Introduction: Genetic Algorithms
 
