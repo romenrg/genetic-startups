@@ -40,7 +40,7 @@ Then, a new generation has to be created. Every new generation is calculated by 
 Learn more about our implementation in the ["Algorithm details"](https://geneticstartups.com/info/algorithm) tab of the info section at [www.geneticstartups.com](https://geneticstartups.com).
 
 ## Implementations
-There will be implementations of this application using 3 different combinations of technologies / frameworks:
+There are different implementations of this application using different combinations of technologies / frameworks:
 - *[**Current**] Web app: Rails + REST API + ReactJS* ([repository](https://github.com/romenrg/genetic-startups-web) | [website](https://geneticstartups.com))
 - *[_Older_] Native Windows app:* C# + .Net + Windows Forms ([repository](https://github.com/romenrg/genetic-startups-desktop-csharp-dotnet) | [installer](https://github.com/romenrg/genetic-startups-desktop-csharp-dotnet/releases))
 
