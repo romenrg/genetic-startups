@@ -1,48 +1,56 @@
 # Genetic Startups
-> An application, based on Genetic Algorithms, representing possible lives of startups. The algorithm improves startup choices over generations, to achieve the most successful outcome possible; in a map where investors, product launches, team members, sad news and sales, among other options, appear.
+> Applications, based on Genetic Algorithms, representing possible lives of startups. The algorithm improves startup choices over generations, to achieve the most successful outcome possible; in a map where investors, product launches, team members, sad news and sales, among other options, appear.
 
 ![Best Candidate in a Map](https://s3-eu-west-1.amazonaws.com/genetic-startups/info/map-best-candidate.png "Showing the best candidate of 15 generations in the given map")
 
 ## Introduction: Genetic Algorithms
 
-In the field of artificial intelligence, a genetic algorithm (GA) is a search heuristic that mimics the process of natural selection. This heuristic is routinely used to generate useful solutions to optimization and search problems.
+Within the field of Artificial Intelligence (AI), Genetic Algorithms (GA) are grouped in the larger class of evolutionary algorithms. And are often used as a search heuristic, to generate solutions to optimization problems.
 
-Genetic algorithms belong to the larger class of evolutionary algorithms (EA), which generate solutions to optimization problems using techniques inspired by natural evolution, such as inheritance, mutation, selection, and crossover.
+Genetic Algorithms use techniques inspired by natural evolution, such as selection, crossover and mutation; in order to evolve a random population of possible solutions into better ones, over generations.
 
 ## The problem: Startup life evolution
 
-Startups are surrounded with huge uncertainty and have very limited resources and time. Besides, the life of a startup is full of obstacles and tough choices. As founders, we must be very careful when choosing one path or another.
+Startups are surrounded with huge uncertainty and have limited resources and time to find product/market-fit and become sustainable businesses. Besides, the life of a startup is full of challenges and tough choices. As founders, we must be very careful choosing one path over another, when making decisions.
 
-In this application, we generate random "maps" that represent the life of a startup (by showing some choices that startup founders usually encounter). Since time and resources are limited, finding the optimal path is key to success. Pursuing that goal, we have developed a genetic algorithm that tries to pick the best possible outcome for the startup, learning with each new generation.
+In these applications, we generate random maps that represent the space of possible choices for the life of the startup. Since finding the best path possible is key to success, we have developed a Genetic Algorithm that improves choices over generations.
 
-Each cell in the map can have any of the elements displayed in the following image. For every choice, we have created a score based on possible values (some negative and some positive) that each choice can give us.
+There are different types of elements (_aka_ "actions") that we might encounter in the map, each with different possible values and a global score. For example:
 
-![Types of Squares](https://s3-eu-west-1.amazonaws.com/genetic-startups/info/types-of-squares.png "Description of all possible squares in the map")
+![Types of Squares](https://s3-eu-west-1.amazonaws.com/genetic-startups/info/gs-web-cell-types.png "Description of all possible squares in the map")
 
-### Population: chromosomes (start cell & movements)
+There are also different probabilities for each action to appear, depending on the quarter of the map.
 
-In this application, we are representing every startup as a binary array. This means that each element of the population would be defined as a set of chromosomes (which can be each a "0" or a "1"). 
+Learn more about the map the dedicated information tab ["The map"](https://geneticstartups.com/info/map) at [www.geneticstartups.com](https://geneticstartups.com).
 
-As an example, given a map of 3 columns and 3 rows in which we allow each startup to take two steps, one possible element of the population could be: "010001".
+## The algorithm
 
-In the example above, since we have 3 rows, there are 3 possible cells for the start position. For that reason, the first two chromosomes represent the start cell. The rest of the chromosomes, in pairs, represent the movements. Both "00" and "10" would be "move right", "01" would be "move down" and "11" would be "move up".
+### Population: defining chromosomes (encoding start cell & movements in genes)
+
+Our evolutionary algorithm starts by defining a random population of individual potential solutions at the beginning.
+
+Each one of those potential solutions (each individual) is defined as a binary array, represented as a set of genes (each either a "0" or a "1"). These genes are grouped in chromosomes, encoding both the start cell and the movements of each individual.
 
 ### Operators: selection, crossover and mutation
 
-For each generation, we will display the best candidate within the population. The score is calculated based on the values of the types of squares as described in that section of the menu.
-Every new generation is calculated by performing 3 operations:
-- Selection: The algorithm picks the top 1/3 candidates and pass them directly to the next generation.
-- Crossover: The algorithm randomly picks pairs of elements, representing 1/3 of the population, divides them by half and creates two new elements by crossing.
-- Mutation: The remaining 1/3 of new elements will be generated by picking random elements of the previous generation and changing a random chromosome to each one.
+After the initial random population is created, the elements are evaluated and sorted based on their "fitness". The best candidate is selected and displayed.
 
-### Implementations
-There will be implementations of this application using 3 different combinations of technologies / framewoks:
-- *Native Windows app:* C# + .Net + Windows Forms ([repository](https://github.com/romenrg/genetic-startups-desktop-csharp-dotnet) | [installer](https://github.com/romenrg/genetic-startups-desktop-csharp-dotnet/releases))
-- *NodeJS + REST API + ReactJS*
-- *Java / Spring + REST API + AngularJS*
+Then, a new generation has to be created. Every new generation is calculated by performing 3 operations: selection, crossover and mutation. The percentages vary slightly from the original Windows-based application to the current web-based one; but the fundamentals are the same.
 
-### Copyright and License
+Learn more about our implementation in the ["Algorithm details"](https://geneticstartups.com/info/algorithm) tab of the info section at [www.geneticstartups.com](https://geneticstartups.com).
 
-Copyright 2015 Romen Rodríguez-Gil
+## Implementations
+There will be implementations of this application using 3 different combinations of technologies / frameworks:
+- *[**Current**] Web app: Rails + REST API + ReactJS* ([repository](https://github.com/romenrg/genetic-startups-web) | [website](https://geneticstartups.com))
+- *[_Older_] Native Windows app:* C# + .Net + Windows Forms ([repository](https://github.com/romenrg/genetic-startups-desktop-csharp-dotnet) | [installer](https://github.com/romenrg/genetic-startups-desktop-csharp-dotnet/releases))
 
-Licensed under The MIT License (MIT), as described in the file LICENSE.md
+## Copyright and License
+
+Copyright 2015-2021, Romen Rodríguez-Gil
+
+Licensed under The MIT License (MIT), as described in the file LICENSE.md in the different repositories
+
+## Contribute
+
+Any constructive contributions (e.g. PRs or issues) are welcome. Please feel free to propose changes following
+the contributing guidelines in the different repositories.
