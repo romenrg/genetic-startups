@@ -21,7 +21,7 @@ There are different types of elements (_aka_ "actions") that we might encounter 
 
 There are also different probabilities for each action to appear, depending on the quarter of the map.
 
-Learn more about the map the dedicated information tab ["The map"](https://geneticstartups.com/info/map) at [www.geneticstartups.com](https://geneticstartups.com).
+Learn more about the map in the dedicated information tab ["The map"](https://geneticstartups.com/info/map) at [www.geneticstartups.com](https://geneticstartups.com).
 
 ## The algorithm
 
